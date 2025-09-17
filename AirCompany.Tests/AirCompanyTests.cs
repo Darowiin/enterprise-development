@@ -1,6 +1,6 @@
 namespace AirCompany.Tests;
 
-public class UnitTest1
+public class AirCompanyTests
 {
     [Fact]
     public void Test1()
