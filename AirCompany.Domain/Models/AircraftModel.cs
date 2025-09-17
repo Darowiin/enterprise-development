@@ -23,7 +23,7 @@ public class AircraftModel
     /// <summary>
     /// Maximum flight range of the aircraft in kilometers.
     /// </summary>
-    public required int FlightRangeKm { get; set; }
+    public required double FlightRangeKm { get; set; }
 
     /// <summary>
     /// Maximum passenger capacity of the aircraft.
