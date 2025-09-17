@@ -70,8 +70,8 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
 
         var expectedOrder = new[]
         {
-            "Иванов Иван Иванович",
-            "Петрова Анна Сергеевна"
+            "Ivanov Ivan Ivanovich",
+            "Petrova Anna Sergeevna"
         };
 
         // Assert
