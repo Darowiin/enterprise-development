@@ -109,9 +109,9 @@ public class AirCompanyFixture
 
         Passengers.AddRange(
         [
-            new Passenger { Id = 1, PassportNumber="P100001", FullName="Иванов Иван Иванович", BirthDate=new DateOnly(1985,1,10) },
-            new Passenger { Id = 2, PassportNumber="P100002", FullName="Петрова Анна Сергеевна", BirthDate=new DateOnly(1990,5,22) },
-            new Passenger { Id = 3, PassportNumber="P100003", FullName="Сидоров Петр М.", BirthDate=new DateOnly(1978,3,15) },
+            new Passenger { Id = 1, PassportNumber="P100001", FullName="Ivanov Ivan Ivanovich", BirthDate=new DateOnly(1985,1,10) },
+            new Passenger { Id = 2, PassportNumber="P100002", FullName="Petrova Anna Sergeevna", BirthDate=new DateOnly(1990,5,22) },
+            new Passenger { Id = 3, PassportNumber="P100003", FullName="Sidorov Peter Maximovich", BirthDate=new DateOnly(1978,3,15) },
             new Passenger { Id = 4, PassportNumber="P100004", FullName="Smith John", BirthDate=new DateOnly(1988,11,2) },
             new Passenger { Id = 5, PassportNumber="P100005", FullName="Brown Alice", BirthDate=new DateOnly(1992,7,7) },
             new Passenger { Id = 6, PassportNumber="P100006", FullName="Taylor Robert", BirthDate=new DateOnly(1983,12,12) },
