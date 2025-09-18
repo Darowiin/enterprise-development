@@ -1,32 +1,32 @@
 ﻿namespace AirCompany.Domain.Models;
 
 /// <summary>
-/// Represents a passenger.
+/// Represents a <see cref="Passenger"/> who can purchase <see cref="Ticket"/>s.
 /// </summary>
 public class Passenger
 {
     /// <summary>
-    /// Unique identifier of the passenger.
+    /// Unique identifier of the <see cref="Passenger"/>.
     /// </summary>
-    public int Id { get; set; }
+    public required int Id { get; set; }
 
     /// <summary>
-    /// Passport number of the passenger.
+    /// Passport number of the <see cref="Passenger"/>.
     /// </summary>
     public required string PassportNumber { get; set; }
 
     /// <summary>
-    /// Full name of the passenger.
+    /// Full name of the <see cref="Passenger"/>.
     /// </summary>
     public required string FullName { get; set; }
 
     /// <summary>
-    /// Date of birth of the passenger.
+    /// Date of birth of the <see cref="Passenger"/>.
     /// </summary>
     public DateOnly? BirthDate { get; set; }
 
     /// <summary>
-    /// Navigation property: tickets owned by this passenger.
+    /// Collection of <see cref="Ticket"/>s owned by this <see cref="Passenger"/>.
     /// </summary>
-    public List<Ticket> Tickets { get; set; } = [];
+    public List<Ticket>? Tickets { get; set; } = [];
 }

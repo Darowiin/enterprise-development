@@ -1,4 +1,4 @@
-using AirCompany.Tests.Fixtures;
+using AirCompany.Domain.Fixtures;
 
 namespace AirCompany.Tests;
 
@@ -16,7 +16,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     {
         // Act
         var topFlights = fixture.Flights
-            .OrderByDescending(f => f.Tickets.Count)
+            .OrderByDescending(f => f.Tickets!.Count)
             .Take(5)
             .ToList();
 
@@ -25,12 +25,12 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
         for (var i = 0; i < topFlights.Count - 1; i++)
         {
             Assert.True(
-                topFlights[i].Tickets.Count >= topFlights[i + 1].Tickets.Count,
+                topFlights[i].Tickets!.Count >= topFlights[i + 1].Tickets!.Count,
                 $"Flight {topFlights[i].Code} should have >= passengers than {topFlights[i + 1].Code}"
             );
         }
-        var maxPassengerCount = fixture.Flights.Max(f => f.Tickets.Count);
-        Assert.Equal(maxPassengerCount, topFlights.First().Tickets.Count);
+        var maxPassengerCount = fixture.Flights.Max(f => f.Tickets!.Count);
+        Assert.Equal(maxPassengerCount, topFlights.First().Tickets!.Count);
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
         var selectedFlight = fixture.Flights.First(f => f.Code == "SU1001");
 
         // Act
-        var passengersWithNoBaggage = selectedFlight.Tickets
+        var passengersWithNoBaggage = selectedFlight.Tickets!
             .Where(t => t.TotalBaggageWeightKg is null or 0)
             .Select(t => t.Passenger)
             .OrderBy(p => p.FullName, StringComparer.Ordinal)
@@ -75,7 +75,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
         };
 
         // Assert
-        Assert.Equal(expectedOrder, [.. passengersWithNoBaggage.Select(p => p.FullName)]);
+        Assert.Equal(expectedOrder, passengersWithNoBaggage.Select(p => p.FullName).ToArray());
     }
 
     /// <summary>

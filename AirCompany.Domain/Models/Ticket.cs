@@ -1,37 +1,38 @@
 ﻿namespace AirCompany.Domain.Models;
 
 /// <summary>
-/// Represents a ticket for a flight.
+/// Represents a <see cref="Ticket"/> issued to a <see cref="Models.Passenger"/> 
+/// for a specific <see cref="Models.Flight"/>.
 /// </summary>
 public class Ticket
 {
     /// <summary>
-    /// Unique identifier of the ticket.
+    /// Unique identifier of the <see cref="Ticket"/>.
     /// </summary>
-    public int Id { get; set; }
+    public required int Id { get; set; }
 
     /// <summary>
-    /// Navigation property: flight associated with this ticket.
+    /// The <see cref="Models.Flight"/> associated with this <see cref="Ticket"/>.
     /// </summary>
     public required Flight Flight { get; set; }
 
     /// <summary>
-    /// Navigation property: passenger who owns this ticket.
+    /// The <see cref="Models.Passenger"/> who owns this <see cref="Ticket"/>.
     /// </summary>
     public required Passenger Passenger { get; set; }
 
     /// <summary>
-    /// Seat number assigned to this ticket (e.g., "12A").
+    /// Seat number assigned to this <see cref="Ticket"/> (e.g., "12A").
     /// </summary>
     public required string SeatNumber { get; set; }
 
     /// <summary>
-    /// Indicates whether the passenger has hand luggage.
+    /// Indicates whether the <see cref="Models.Passenger"/> has hand luggage for this <see cref="Ticket"/>.
     /// </summary>
-    public bool HasHandLuggage { get; set; }
+    public bool? HasHandLuggage { get; set; }
 
     /// <summary>
-    /// Total baggage weight in kilograms.
+    /// Total baggage weight in kilograms for this <see cref="Ticket"/>.
     /// </summary>
-    public decimal? TotalBaggageWeightKg { get; set; }
+    public double? TotalBaggageWeightKg { get; set; }
 }
