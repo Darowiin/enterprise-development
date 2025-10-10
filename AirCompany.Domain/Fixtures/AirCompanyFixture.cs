@@ -17,28 +17,28 @@ public class AirCompanyFixture
     /// <summary>
     /// List of <see cref="AircraftFamily"/>.
     /// </summary>
-    public List<AircraftFamily> Families { get; } = [];
+    public static List<AircraftFamily> Families { get; } = [];
 
     /// <summary>
     /// List of <see cref="AircraftModel"/>.
     /// </summary>
-    public List<AircraftModel> Models { get; } = [];
+    public static List<AircraftModel> Models { get; } = [];
 
     /// <summary>
     /// List of <see cref="Flight"/>.
     /// </summary>
-    public List<Flight> Flights { get; } = [];
+    public static List<Flight> Flights { get; } = [];
 
     /// <summary>
     /// List of <see cref="Passenger"/>.
     /// </summary>
-    public List<Passenger> Passengers { get; } = [];
+    public static List<Passenger> Passengers { get; } = [];
 
     /// <summary>
     /// List of <see cref="Ticket"/>, 
     /// linking <see cref="Passenger"/> to <see cref="Flight"/>.
     /// </summary>
-    public List<Ticket> Tickets { get; } = [];
+    public static List<Ticket> Tickets { get; } = [];
 
     private int _ticketId = 1;
 
