@@ -15,7 +15,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     public void GetTopFlightsByPassengerCount_ShouldReturnFlightsOrderedByPassengerCount()
     {
         // Act
-        var topFlights = fixture.Flights
+        var topFlights = AirCompanyFixture.Flights
             .OrderByDescending(f => f.Tickets!.Count)
             .Take(5)
             .ToList();
@@ -29,7 +29,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
                 $"Flight {topFlights[i].Code} should have >= passengers than {topFlights[i + 1].Code}"
             );
         }
-        var maxPassengerCount = fixture.Flights.Max(f => f.Tickets!.Count);
+        var maxPassengerCount = AirCompanyFixture.Flights.Max(f => f.Tickets!.Count);
         Assert.Equal(maxPassengerCount, topFlights.First().Tickets!.Count);
     }
 
@@ -41,8 +41,8 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     public void GetFlightsWithMinimalDuration_ShouldReturnFlightsWithShortestDuration()
     {
         // Act
-        var minDuration = fixture.Flights.Min(f => f.FlightDuration ?? TimeSpan.MaxValue);
-        var flightsWithMinDuration = fixture.Flights
+        var minDuration = AirCompanyFixture.Flights.Min(f => f.FlightDuration ?? TimeSpan.MaxValue);
+        var flightsWithMinDuration = AirCompanyFixture.Flights
             .Where(f => f.FlightDuration.HasValue && f.FlightDuration.Value == minDuration)
             .ToList();
 
@@ -59,7 +59,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     public void GetPassengersWithZeroBaggageByFlight_ShouldReturnOrderedByName()
     {
         // Arrange
-        var selectedFlight = fixture.Flights.First(f => f.Code == "SU1001");
+        var selectedFlight = AirCompanyFixture.Flights.First(f => f.Code == "SU1001");
 
         // Act
         var passengersWithNoBaggage = selectedFlight.Tickets!
@@ -86,12 +86,12 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     public void GetFlightsByModelAndPeriod_ShouldReturnOnlyMatchingFlights()
     {
         // Arrange
-        var selectedModel = fixture.Models.First();
+        var selectedModel = AirCompanyFixture.Models.First();
         var startDate = new DateTime(2025, 10, 1);
         var endDate = new DateTime(2025, 10, 31);
 
         // Act
-        var flightsInPeriod = fixture.Flights
+        var flightsInPeriod = AirCompanyFixture.Flights
             .Where(f => f.AircraftModel == selectedModel &&
                         f.DepartureDateTime.HasValue &&
                         f.DepartureDateTime.Value >= startDate &&
@@ -118,7 +118,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
         var arrival = "LHR";
 
         // Act
-        var flightsByRoute = fixture.Flights
+        var flightsByRoute = AirCompanyFixture.Flights
             .Where(f => f.DepartureAirport == departure && f.ArrivalAirport == arrival)
             .ToList();
 
