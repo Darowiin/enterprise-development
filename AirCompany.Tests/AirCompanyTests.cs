@@ -1,4 +1,4 @@
-using AirCompany.Domain.Fixtures;
+using AirCompany.Domain.Fixture;
 
 namespace AirCompany.Tests;
 

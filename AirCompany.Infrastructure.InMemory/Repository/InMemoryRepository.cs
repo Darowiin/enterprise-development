@@ -1,4 +1,4 @@
-﻿namespace AirCompany.Infrastructure.InMemory;
+﻿namespace AirCompany.Infrastructure.InMemory.Repository;
 
 /// <summary>
 /// Generic in-memory repository that provides basic CRUD operations

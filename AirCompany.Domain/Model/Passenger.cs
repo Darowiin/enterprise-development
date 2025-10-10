@@ -1,4 +1,4 @@
-﻿namespace AirCompany.Domain.Models;
+﻿namespace AirCompany.Domain.Model;
 
 /// <summary>
 /// Represents a <see cref="Passenger"/> who can purchase <see cref="Ticket"/>s.

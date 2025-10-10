@@ -1,6 +1,6 @@
-﻿using AirCompany.Domain.Models;
+﻿using AirCompany.Domain.Model;
 
-namespace AirCompany.Domain.Fixtures;
+namespace AirCompany.Domain.Fixture;
 
 /// <summary>
 /// Fixture for testing the airline company.

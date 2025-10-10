@@ -1,4 +1,4 @@
-﻿namespace AirCompany.Domain.Models;
+﻿namespace AirCompany.Domain.Model;
 
 /// <summary>
 /// Represents an <see cref="AircraftFamily"/> (e.g., "A320 Family", "Boeing 737 Family").

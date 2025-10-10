@@ -1,4 +1,7 @@
-﻿namespace AirCompany.Infrastructure.InMemory;
+﻿using AirCompany.Domain.Fixture;
+using AirCompany.Domain.Model;
+
+namespace AirCompany.Infrastructure.InMemory.Repository;
 
 /// <summary>
 /// In-memory repository for <see cref="Passenger"/> entities.
