@@ -1,6 +1,6 @@
 ﻿using AirCompany.Domain.Model;
 
-namespace AirCompany.Domain.Fixture;
+namespace AirCompany.Domain.Data;
 
 /// <summary>
 /// Fixture for testing the airline company.
@@ -12,7 +12,7 @@ namespace AirCompany.Domain.Fixture;
 /// and <see cref="Ticket"/>.
 /// Used for unit tests with predefined data.
 /// </summary>
-public class AirCompanyFixture
+public class DataSeeder
 {
     /// <summary>
     /// List of <see cref="AircraftFamily"/>.
@@ -50,7 +50,7 @@ public class AirCompanyFixture
     /// <see cref="Passenger"/>, 
     /// and <see cref="Ticket"/>.
     /// </summary>
-    public AirCompanyFixture()
+    public DataSeeder()
     {
         Families.AddRange(
         [

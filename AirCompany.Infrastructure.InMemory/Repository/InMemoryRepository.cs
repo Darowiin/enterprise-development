@@ -5,27 +5,19 @@
 /// for entities of type <typeparamref name="TEntity"/> with key type <see cref="int"/>.
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
-public abstract class InMemoryRepository<TEntity> : IRepository<TEntity, int>
+/// <param name="entities">Shared list of entities.</param>
+public abstract class InMemoryRepository<TEntity>(List<TEntity> entities) : IRepository<TEntity, int>
     where TEntity : class
 {
     /// <summary>
     /// Internal list that stores all entities in memory.
     /// </summary>
-    private readonly List<TEntity> _entities;
+    private readonly List<TEntity> _entities = entities;
 
     /// <summary>
     /// Local ID generator for this repository type.
     /// </summary>
     private int _currentId = 1;
-
-    /// <summary>
-    /// Initializes a new instance of the repository class.
-    /// </summary>
-    /// <param name="entities">Shared list of entities.</param>
-    protected InMemoryRepository(List<TEntity> entities)
-    {
-        _entities = entities;
-    }
 
     /// <summary>
     /// Creates a new entity and assigns a unique ID.
@@ -50,7 +42,7 @@ public abstract class InMemoryRepository<TEntity> : IRepository<TEntity, int>
     /// <summary>
     /// Returns all entities stored in memory.
     /// </summary>
-    public virtual List<TEntity> GetAll() => _entities.ToList();
+    public virtual List<TEntity> GetAll() => [.. _entities];
 
     /// <summary>
     /// Updates an existing entity by replacing it with the new version.

@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCompany.Domain", "AirCompany.Domain\AirCompany.Domain.csproj", "{53990AD3-E7B0-AA3E-A906-C020B93AF457}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCompany.Tests", "AirCompany.Tests\AirCompany.Tests.csproj", "{889F455D-BF67-97A1-E5B6-13E5A22A254F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35888DE8-60A0-4858-9E2E-475608F26C0F} = {35888DE8-60A0-4858-9E2E-475608F26C0F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCompany.Infrastructure.InMemory", "AirCompany.Infrastructure.InMemory\AirCompany.Infrastructure.InMemory.csproj", "{35888DE8-60A0-4858-9E2E-475608F26C0F}"
 EndProject

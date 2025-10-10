@@ -1,15 +1,11 @@
-﻿using AirCompany.Domain.Fixture;
-using AirCompany.Domain.Model;
-
-namespace AirCompany.Infrastructure.InMemory.Repository;
+﻿namespace AirCompany.Infrastructure.InMemory.Repository;
 
 /// <summary>
-/// In-memory repository for <see cref="Flight"/> entities.
+/// In-memory repository for Flight entities.
 /// </summary>
 public class FlightInMemoryRepository : InMemoryRepository<Flight>
 {
-    public FlightInMemoryRepository() : base(AirCompanyFixture.Flights)
-    { }
+    public FlightInMemoryRepository(List<Flight> entities) : base(entities) { }
     protected override int GetEntityId(Flight entity) => entity.Id;
     protected override void SetEntityId(Flight entity, int id) => entity.Id = id;
 }

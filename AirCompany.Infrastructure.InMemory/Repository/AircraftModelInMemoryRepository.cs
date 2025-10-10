@@ -1,15 +1,11 @@
-﻿using AirCompany.Domain.Fixture;
-using AirCompany.Domain.Model;
-
-namespace AirCompany.Infrastructure.InMemory.Repository;
+﻿namespace AirCompany.Infrastructure.InMemory.Repository;
 
 /// <summary>
-/// In-memory repository for <see cref="AircraftModel"/> entities.
+/// In-memory repository for Aircraft Model entities.
 /// </summary>
 public class AircraftModelInMemoryRepository : InMemoryRepository<AircraftModel>
 {
-    public AircraftModelInMemoryRepository() : base(AirCompanyFixture.Models)
-    { }
+    public AircraftModelInMemoryRepository(List<AircraftModel> entities) : base(entities) { }
     protected override int GetEntityId(AircraftModel entity) => entity.Id;
     protected override void SetEntityId(AircraftModel entity, int id) => entity.Id = id;
 }
