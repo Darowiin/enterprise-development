@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AirCompany.Application.Contracts\AirCompany.Application.Contracts.csproj" />
+    <ProjectReference Include="..\AirCompany.Domain\AirCompany.Domain.csproj" />
+    <ProjectReference Include="..\AirCompany.Infrastructure.InMemory\AirCompany.Infrastructure.InMemory.csproj" />
+  </ItemGroup>
+
+</Project>

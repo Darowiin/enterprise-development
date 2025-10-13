@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCompany.Tests", "AirComp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCompany.Infrastructure.InMemory", "AirCompany.Infrastructure.InMemory\AirCompany.Infrastructure.InMemory.csproj", "{35888DE8-60A0-4858-9E2E-475608F26C0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCompany.Application", "AirCompany.Application\AirCompany.Application.csproj", "{C776367A-5B26-49C2-981B-485BE7112143}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCompany.Application.Contracts", "AirCompany.Application.Contracts\AirCompany.Application.Contracts.csproj", "{B0BA3D17-909C-4AF8-9BD9-C37EE7DE39A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,14 @@ Global
 		{35888DE8-60A0-4858-9E2E-475608F26C0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35888DE8-60A0-4858-9E2E-475608F26C0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35888DE8-60A0-4858-9E2E-475608F26C0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C776367A-5B26-49C2-981B-485BE7112143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C776367A-5B26-49C2-981B-485BE7112143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C776367A-5B26-49C2-981B-485BE7112143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C776367A-5B26-49C2-981B-485BE7112143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0BA3D17-909C-4AF8-9BD9-C37EE7DE39A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0BA3D17-909C-4AF8-9BD9-C37EE7DE39A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0BA3D17-909C-4AF8-9BD9-C37EE7DE39A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0BA3D17-909C-4AF8-9BD9-C37EE7DE39A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@
 namespace AirCompany.Domain.Data;
 
 /// <summary>
-/// Fixture for testing the airline company.
+/// Data Seeder for testing the airline company.
 /// Initializes a set of data: 
 /// <see cref="AircraftFamily"/>, 
 /// <see cref="AircraftModel"/>, 
@@ -43,7 +43,7 @@ public class DataSeeder
     private int _ticketId = 1;
 
     /// <summary>
-    /// Constructor initializes the fixture with predefined data.
+    /// Constructor initializes the data seeder with predefined data.
     /// Adds <see cref="AircraftFamily"/>, 
     /// <see cref="AircraftModel"/>, 
     /// <see cref="Flight"/>, 
