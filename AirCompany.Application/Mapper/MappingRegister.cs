@@ -37,11 +37,13 @@ public class MappingRegister : IRegister
             .Ignore(dest => dest.Tickets);
 
         config.NewConfig<AircraftModel, AircraftModelDto>()
-            .Map(dest => dest.AircraftFamilyId, src => src.Family.Id);
+            .Map(dest => dest.AircraftFamilyId, src => src.Family.Id)
+            .Map(dest => dest.FlightIds, src => src.Flights!.Select(f => f.Id));
 
         config.NewConfig<AircraftModelCreateUpdateDto, AircraftModel>()
             .Ignore(dest => dest.Id)
-            .Ignore(dest => dest.Family);
+            .Ignore(dest => dest.Family)
+            .Ignore(dest => dest.Flights);
 
         config.NewConfig<AircraftFamily, AircraftFamilyDto>()
             .Map(dest => dest.AircraftModelIds, src => src.Models!.Select(m => m.Id));

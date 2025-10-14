@@ -1,1 +1,2 @@
-﻿global using AirCompany.Domain.Model;
+﻿global using AirCompany.Domain.Data;
+global using AirCompany.Domain.Model;

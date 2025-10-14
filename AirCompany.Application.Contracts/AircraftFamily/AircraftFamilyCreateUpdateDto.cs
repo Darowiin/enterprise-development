@@ -2,6 +2,5 @@
 public record AircraftFamilyCreateUpdateDto
     (
     string Name,
-    string Manufacturer,
-    string ArrivalAirport
+    string Manufacturer
     );

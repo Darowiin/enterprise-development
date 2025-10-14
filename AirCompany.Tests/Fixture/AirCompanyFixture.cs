@@ -20,12 +20,12 @@ public class AirCompanyFixture
     /// </summary>
     public AirCompanyFixture()
     {
-        _ = new DataSeeder();
+        var seeder = new DataSeeder();
 
-        PassengerRepo = new PassengerInMemoryRepository(DataSeeder.Passengers);
-        FlightRepo = new FlightInMemoryRepository(DataSeeder.Flights);
-        TicketRepo = new TicketInMemoryRepository(DataSeeder.Tickets);
-        FamilyRepo = new AircraftFamilyInMemoryRepository(DataSeeder.Families);
-        ModelRepo = new AircraftModelInMemoryRepository(DataSeeder.Models);
+        PassengerRepo = new PassengerInMemoryRepository(seeder);
+        FlightRepo = new FlightInMemoryRepository(seeder);
+        TicketRepo = new TicketInMemoryRepository(seeder);
+        FamilyRepo = new AircraftFamilyInMemoryRepository(seeder);
+        ModelRepo = new AircraftModelInMemoryRepository(seeder);
     }
 }

@@ -5,7 +5,7 @@
 /// </summary>
 public class TicketInMemoryRepository : InMemoryRepository<Ticket>
 {
-    public TicketInMemoryRepository(List<Ticket> entities) : base(entities) { }
+    public TicketInMemoryRepository(DataSeeder seeder) : base(seeder.Tickets) { }
     protected override int GetEntityId(Ticket entity) => entity.Id;
     protected override void SetEntityId(Ticket entity, int id) => entity.Id = id;
 }

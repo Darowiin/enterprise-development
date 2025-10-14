@@ -5,7 +5,7 @@
 /// </summary>
 public class PassengerInMemoryRepository : InMemoryRepository<Passenger>
 {
-    public PassengerInMemoryRepository(List<Passenger> entities) : base(entities) { }
+    public PassengerInMemoryRepository(DataSeeder seeder) : base(seeder.Passengers) { }
     protected override int GetEntityId(Passenger entity) => entity.Id;
     protected override void SetEntityId(Passenger entity, int id) => entity.Id = id;
 }

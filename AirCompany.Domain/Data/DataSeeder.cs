@@ -17,28 +17,28 @@ public class DataSeeder
     /// <summary>
     /// List of <see cref="AircraftFamily"/>.
     /// </summary>
-    public static List<AircraftFamily> Families { get; } = [];
+    public List<AircraftFamily> Families { get; } = [];
 
     /// <summary>
     /// List of <see cref="AircraftModel"/>.
     /// </summary>
-    public static List<AircraftModel> Models { get; } = [];
+    public List<AircraftModel> Models { get; } = [];
 
     /// <summary>
     /// List of <see cref="Flight"/>.
     /// </summary>
-    public static List<Flight> Flights { get; } = [];
+    public List<Flight> Flights { get; } = [];
 
     /// <summary>
     /// List of <see cref="Passenger"/>.
     /// </summary>
-    public static List<Passenger> Passengers { get; } = [];
+    public List<Passenger> Passengers { get; } = [];
 
     /// <summary>
     /// List of <see cref="Ticket"/>, 
     /// linking <see cref="Passenger"/> to <see cref="Flight"/>.
     /// </summary>
-    public static List<Ticket> Tickets { get; } = [];
+    public List<Ticket> Tickets { get; } = [];
 
     private int _ticketId = 1;
 

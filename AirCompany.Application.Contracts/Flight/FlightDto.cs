@@ -1,4 +1,6 @@
-﻿namespace AirCompany.Application.Contracts.Flight;
+﻿using AirCompany.Application.Contracts.Passenger;
+
+namespace AirCompany.Application.Contracts.Flight;
 public record FlightDto
     (
     int Id,
@@ -9,5 +11,6 @@ public record FlightDto
     DateTime? ArrivalDateTime, 
     TimeSpan? FlightDuration, 
     int AircraftModelId,
-    List<int>? TicketIds
+    List<int>? TicketIds,
+    List<PassengerDto>? Passengers
     );
