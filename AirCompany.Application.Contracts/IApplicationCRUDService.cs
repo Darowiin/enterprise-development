@@ -6,7 +6,7 @@
 /// <typeparam name="TDto">DTO type used for GET requests.</typeparam>
 /// <typeparam name="TCreateUpdateDto">DTO type used for POST/PUT requests.</typeparam>
 /// <typeparam name="TKey">Type of the DTO identifier.</typeparam>
-public interface IApplicationService<TDto, TCreateUpdateDto, TKey>
+public interface IApplicationCRUDService<TDto, TCreateUpdateDto, TKey>
     where TDto : class
     where TCreateUpdateDto : class
     where TKey : struct

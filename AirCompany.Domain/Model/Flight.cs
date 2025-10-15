@@ -2,12 +2,12 @@
 
 
 /// <summary>
-/// Represents a scheduled <see cref="Flight"/> between two airports.
+/// Represents a scheduled flight between two airports.
 /// </summary>
 public class Flight
 {
     /// <summary>
-    /// Unique identifier of the <see cref="Flight"/>.
+    /// Unique identifier.
     /// </summary>
     public required int Id { get; set; }
 
@@ -17,37 +17,37 @@ public class Flight
     public required string Code { get; set; }
 
     /// <summary>
-    /// Departure airport for this <see cref="Flight"/> (IATA code or city name).
+    /// Departure airport for this flight (IATA code or city name).
     /// </summary>
     public required string DepartureAirport { get; set; }
 
     /// <summary>
-    /// Arrival airport for this <see cref="Flight"/> (IATA code or city name).
+    /// Arrival airport for this flight (IATA code or city name).
     /// </summary>
     public required string ArrivalAirport { get; set; }
 
     /// <summary>
-    /// Scheduled departure date and time of this <see cref="Flight"/>.
+    /// Scheduled departure date and time of this flight.
     /// </summary>
     public DateTime? DepartureDateTime { get; set; }
 
     /// <summary>
-    /// Scheduled arrival date and time of this <see cref="Flight"/>.
+    /// Scheduled arrival date and time of this flight.
     /// </summary>
     public DateTime? ArrivalDateTime { get; set; }
 
     /// <summary>
-    /// Total duration of this <see cref="Flight"/>.
+    /// Total duration of this flight.
     /// </summary>
     public TimeSpan? FlightDuration { get; set; }
 
     /// <summary>
-    /// The <see cref="AircraftModel"/> operating this <see cref="Flight"/>.
+    /// The <see cref="Model.AircraftModel"/> operating this flight.
     /// </summary>
     public required AircraftModel AircraftModel { get; set; }
 
     /// <summary>
-    /// Collection of <see cref="Ticket"/>s issued for this <see cref="Flight"/>.
+    /// Collection of <see cref="Ticket"/>s issued for this flight.
     /// </summary>
     public List<Ticket>? Tickets { get; set; } = [];
 }

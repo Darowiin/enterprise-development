@@ -1,4 +1,4 @@
-﻿namespace AirCompany.Infrastructure.InMemory.Repository;
+﻿namespace AirCompany.Domain;
 
 /// <summary>
 /// Defines a generic repository interface that provides 

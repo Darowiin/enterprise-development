@@ -1,11 +1,29 @@
-﻿namespace AirCompany.Application.Contracts.Flight;
+﻿using AirCompany.Application.Contracts.AircraftModel;
+using AirCompany.Application.Contracts.Passenger;
+using AirCompany.Application.Contracts.Ticket;
+
+namespace AirCompany.Application.Contracts.Flight;
 
 /// <summary>
 /// Service interface for managing <see cref="Flight"/> entities.
-/// Provides CRUD operations and specialized queries for flights.
+/// Provides CRUD operations and specialized queries for flights, including related models, tickets.
 /// </summary>
-public interface IFlightService : IApplicationService<FlightDto, FlightCreateUpdateDto, int>
+public interface IFlightCRUDService : IApplicationCRUDService<FlightDto, FlightCreateUpdateDto, int>
 {
+    /// <summary>
+    /// Retrieves the <see cref="AircraftModelDto"/> associated with a specific flight.
+    /// </summary>
+    /// <param name="flightId">The ID of the flight.</param>
+    /// <returns>The corresponding <see cref="AircraftModelDto"/>.</returns>
+    public AircraftModelDto GetAircraftModel(int flightId);
+
+    /// <summary>
+    /// Retrieves all tickets associated with a specific flight.
+    /// </summary>
+    /// <param name="flightId">The ID of the flight.</param>
+    /// <returns>List of <see cref="TicketDto"/> for the flight.</returns>
+    public List<TicketDto> GetTickets(int flightId);
+
     /// <summary>
     /// Returns the top 5 flights ordered by the number of passengers.
     /// </summary>
@@ -23,7 +41,7 @@ public interface IFlightService : IApplicationService<FlightDto, FlightCreateUpd
     /// </summary>
     /// <param name="flightId">Flight identifier.</param>
     /// <returns>List of <see cref="FlightDto"/> containing passengers with no baggage.</returns>
-    public List<FlightDto> GetPassengersWithZeroBaggageByFlight(int flightId);
+    public List<PassengerDto> GetPassengersWithZeroBaggageByFlight(int flightId);
 
     /// <summary>
     /// Returns flights for a given aircraft model within a specified period.

@@ -1,4 +1,7 @@
-﻿using AirCompany.Application.Contracts.Flight;
+﻿using AirCompany.Application.Contracts.AircraftModel;
+using AirCompany.Application.Contracts.Flight;
+using AirCompany.Application.Contracts.Passenger;
+using AirCompany.Application.Contracts.Ticket;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirCompany.Api.Host.Controllers;
@@ -8,9 +11,51 @@ namespace AirCompany.Api.Host.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class FlightController(IFlightService service, ILogger<FlightController> logger)
+public class FlightController(IFlightCRUDService service, ILogger<FlightController> logger)
     : CrudControllerBase<FlightDto, FlightCreateUpdateDto, int>(service, logger)
 {
+    /// <summary>
+    /// Retrieves the aircraft model of a flight.
+    /// </summary>
+    [HttpGet("{id}/AircraftModel")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
+    public ActionResult<AircraftModelDto> GetAircraftModel(int id)
+        => ExecuteWithLogging(nameof(GetAircraftModel), () =>
+        {
+            try
+            {
+                var result = service.GetAircraftModel(id);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        });
+
+    /// <summary>
+    /// Retrieves all tickets of a flight.
+    /// </summary>
+    [HttpGet("{id}/Tickets")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
+    public ActionResult<List<TicketDto>> GetTickets(int id)
+        => ExecuteWithLogging(nameof(GetTickets), () =>
+        {
+            try
+            {
+                var result = service.GetTickets(id);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        });
+
     /// <summary>
     /// Returns top 5 flights ordered by passenger count.
     /// </summary>
@@ -46,7 +91,7 @@ public class FlightController(IFlightService service, ILogger<FlightController> 
     [ProducesResponseType(200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public ActionResult<List<FlightDto>> GetPassengersWithZeroBaggageByFlight([FromQuery] int flightId)
+    public ActionResult<List<PassengerDto>> GetPassengersWithZeroBaggageByFlight([FromQuery] int flightId)
         => ExecuteWithLogging(nameof(GetPassengersWithZeroBaggageByFlight), () =>
         {
             var result = service.GetPassengersWithZeroBaggageByFlight(flightId);

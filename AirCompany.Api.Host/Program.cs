@@ -6,6 +6,7 @@ using AirCompany.Application.Contracts.Passenger;
 using AirCompany.Application.Contracts.Ticket;
 using AirCompany.Application.Mapper;
 using AirCompany.Application.Service;
+using AirCompany.Domain;
 using AirCompany.Domain.Data;
 using AirCompany.Domain.Model;
 using AirCompany.Infrastructure.InMemory.Repository;
@@ -28,11 +29,11 @@ builder.Services.AddSingleton<IRepository<Passenger, int>, PassengerInMemoryRepo
 builder.Services.AddSingleton<IRepository<AircraftModel, int>, AircraftModelInMemoryRepository>();
 builder.Services.AddSingleton<IRepository<AircraftFamily, int>, AircraftFamilyInMemoryRepository>();
 
-builder.Services.AddScoped<IFlightService, FlightService>();
-builder.Services.AddScoped<IApplicationService<TicketDto, TicketCreateUpdateDto, int>, TicketService>();
-builder.Services.AddScoped<IApplicationService<PassengerDto, PassengerCreateUpdateDto, int>, PassengerService>();
-builder.Services.AddScoped<IApplicationService<AircraftModelDto, AircraftModelCreateUpdateDto, int>, AirCraftModelService>();
-builder.Services.AddScoped<IApplicationService<AircraftFamilyDto, AircraftFamilyCreateUpdateDto, int>, AirCraftFamilyService>();
+builder.Services.AddScoped<IFlightCRUDService, FlightService>();
+builder.Services.AddScoped<ITicketCRUDService, TicketService>();
+builder.Services.AddScoped<IPassengerCRUDService, PassengerService>();
+builder.Services.AddScoped<IAircraftModelReadService, AirCraftModelService>();
+builder.Services.AddScoped<IAircraftFamilyReadService, AirCraftFamilyService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

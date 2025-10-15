@@ -199,6 +199,11 @@ public class DataSeeder
             }
         ]);
 
+        foreach (var flight in Flights)
+        {
+            flight.AircraftModel.Flights.Add(flight);
+        }
+
         Passengers.AddRange(
         [
             new Passenger { Id = 1, PassportNumber="P100001", FullName="Ivanov Ivan Ivanovich", BirthDate=new DateOnly(1985,1,10) },

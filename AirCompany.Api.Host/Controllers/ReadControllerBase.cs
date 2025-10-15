@@ -4,76 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace AirCompany.Api.Host.Controllers;
 
 /// <summary>
-/// Generic base controller providing CRUD endpoints for all entities.
+/// Generic base controller providing only read endpoints for all entities.
 /// </summary>
 /// <typeparam name="TDto">DTO type returned by the API.</typeparam>
-/// <typeparam name="TCreateUpdateDto">DTO type used for creation and update operations.</typeparam>
 /// <typeparam name="TKey">Type of the entity identifier.</typeparam>
 /// <param name="appService">Service for work with DTO.</param>
 /// <param name="logger">Logger for information.</param>
 [Route("api/[controller]")]
 [ApiController]
-public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
-    IApplicationCRUDService<TDto, TCreateUpdateDto, TKey> appService,
-    ILogger<CrudControllerBase<TDto, TCreateUpdateDto, TKey>> logger)
+public abstract class ReadControllerBase<TDto, TKey>(
+    IApplicationReadService<TDto, TKey> appService,
+    ILogger<ReadControllerBase<TDto, TKey>> logger)
     : ControllerBase
     where TDto : class
-    where TCreateUpdateDto : class
     where TKey : struct
 {
-    /// <summary>
-    /// Creates a new entity.
-    /// </summary>
-    /// <param name="newDto">Data for the new entity.</param>
-    /// <returns>The created entity.</returns>
-    [HttpPost]
-    [ProducesResponseType(201)]
-    [ProducesResponseType(500)]
-    public ActionResult<TDto> Create([FromBody] TCreateUpdateDto newDto)
-        => ExecuteWithLogging(nameof(Create), () =>
-        {
-            var result = appService.Create(newDto);
-            return CreatedAtAction(nameof(Get), result);
-        });
-
-    /// <summary>
-    /// Updates an existing entity.
-    /// </summary>
-    /// <param name="id">Identifier of the entity to update.</param>
-    /// <param name="newDto">Updated entity data.</param>
-    /// <returns>The updated entity.</returns>
-    [HttpPut("{id}")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(404)]
-    [ProducesResponseType(500)]
-    public ActionResult<TDto> Edit(TKey id, [FromBody] TCreateUpdateDto newDto)
-        => ExecuteWithLogging(nameof(Edit), () =>
-        {
-            try
-            {
-                var result = appService.Update(newDto, id);
-                return Ok(result);
-            } 
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-        });
-
-    /// <summary>
-    /// Deletes an entity by ID.
-    /// </summary>
-    /// <param name="id">Identifier of the entity to delete.</param>
-    [HttpDelete("{id}")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(500)]
-    public IActionResult Delete(TKey id)
-        => ExecuteWithLogging(nameof(Delete), () =>
-        {
-            appService.Delete(id);
-            return Ok();
-        });
-
     /// <summary>
     /// Retrieves all entities.
     /// </summary>
@@ -100,7 +45,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
             {
                 var result = appService.Get(id);
                 return Ok(result);
-            } 
+            }
             catch (KeyNotFoundException)
             {
                 return NotFound();

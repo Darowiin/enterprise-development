@@ -1,23 +1,40 @@
-﻿namespace AirCompany.Infrastructure.InMemory.Repository;
+﻿using AirCompany.Domain;
+
+namespace AirCompany.Infrastructure.InMemory.Repository;
 
 /// <summary>
 /// Generic in-memory repository that provides basic CRUD operations
-/// for entities of type <typeparamref name="TEntity"/> with key type <see cref="int"/>.
+/// for entities of type <typeparamref name="TEntity"/> with key type <typeparamref name="TKey"/>.
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
-/// <param name="entities">Shared list of entities.</param>
-public abstract class InMemoryRepository<TEntity>(List<TEntity> entities) : IRepository<TEntity, int>
+/// <typeparam name="TKey">Type of entity primary key. Must be <see cref="int"/> for automatic ID generation.</typeparam>
+public abstract class InMemoryRepository<TEntity, TKey> : IRepository<TEntity, TKey>
     where TEntity : class
+    where TKey : struct
 {
     /// <summary>
     /// Internal list that stores all entities in memory.
     /// </summary>
-    private readonly List<TEntity> _entities = entities;
+    private readonly List<TEntity> _entities;
 
     /// <summary>
     /// Local ID generator for this repository type.
     /// </summary>
-    private int _currentId = 1;
+    private int _currentId;
+
+    /// <summary>
+    /// Initializes a new instance.
+    /// </summary>
+    /// <param name="entities">Shared list of entities.</param>
+    protected InMemoryRepository(List<TEntity> entities)
+    {
+        _entities = entities ?? [];
+
+        if (typeof(TKey) == typeof(int))
+        {
+            _currentId = _entities.Count != 0 ? _entities.Max(e => (int)(object)GetEntityId(e)) + 1 : 1;
+        }
+    }
 
     /// <summary>
     /// Creates a new entity and assigns a unique ID.
@@ -25,7 +42,10 @@ public abstract class InMemoryRepository<TEntity>(List<TEntity> entities) : IRep
     /// <param name="entity">Entity to create.</param>
     public virtual void Create(TEntity entity)
     {
-        SetEntityId(entity, _currentId++);
+        if (typeof(TKey) == typeof(int))
+        {
+            SetEntityId(entity, (TKey)(object)_currentId++);
+        }
         _entities.Add(entity);
     }
 
@@ -34,9 +54,9 @@ public abstract class InMemoryRepository<TEntity>(List<TEntity> entities) : IRep
     /// </summary>
     /// <param name="entityId">Entity ID.</param>
     /// <returns>The entity if found; otherwise, <see langword="null"/>.</returns>
-    public virtual TEntity? Get(int entityId)
+    public virtual TEntity? Get(TKey entityId)
     {
-        return _entities.FirstOrDefault(e => GetEntityId(e) == entityId);
+        return _entities.FirstOrDefault(e => GetEntityId(e).Equals(entityId));
     }
 
     /// <summary>
@@ -58,7 +78,7 @@ public abstract class InMemoryRepository<TEntity>(List<TEntity> entities) : IRep
     /// Deletes an entity by its ID, if it exists.
     /// </summary>
     /// <param name="entityId">Entity ID.</param>
-    public virtual void Delete(int entityId)
+    public virtual void Delete(TKey entityId)
     {
         var entity = Get(entityId);
         if (entity != null)
@@ -68,10 +88,10 @@ public abstract class InMemoryRepository<TEntity>(List<TEntity> entities) : IRep
     /// <summary>
     /// Retrieves the entity's unique identifier.
     /// </summary>
-    protected abstract int GetEntityId(TEntity entity);
+    protected abstract TKey GetEntityId(TEntity entity);
 
     /// <summary>
     /// Sets the entity's unique identifier.
     /// </summary>
-    protected abstract void SetEntityId(TEntity entity, int id);
+    protected abstract void SetEntityId(TEntity entity, TKey id);
 }
