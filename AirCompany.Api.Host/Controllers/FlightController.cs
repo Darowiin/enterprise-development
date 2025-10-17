@@ -11,7 +11,7 @@ namespace AirCompany.Api.Host.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class FlightController(IFlightCRUDService service, ILogger<FlightController> logger)
+public class FlightController(IFlightCrudService service, ILogger<FlightController> logger)
     : CrudControllerBase<FlightDto, FlightCreateUpdateDto, int>(service, logger)
 {
     /// <summary>

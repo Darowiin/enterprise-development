@@ -10,7 +10,7 @@ namespace AirCompany.Api.Host.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class PassengerController(IPassengerCRUDService service, ILogger<PassengerController> logger) 
+public class PassengerController(IPassengerCrudService service, ILogger<PassengerController> logger) 
     : CrudControllerBase<PassengerDto, PassengerCreateUpdateDto, int> (service, logger) 
 {
     /// <summary>

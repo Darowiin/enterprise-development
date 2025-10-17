@@ -10,9 +10,9 @@ namespace AirCompany.Application.Service;
 
 /// <summary>
 /// Service that provides CRUD operations and unit-test result for <see cref="Flight"/> entities.
-/// Implements <see cref="IFlightCRUDService"/> for operations.
+/// Implements <see cref="IFlightCrudService"/> for operations.
 /// </summary>
-public class FlightService(IRepository<Flight, int> repository, IMapper mapper) : IFlightCRUDService
+public class FlightService(IRepository<Flight, int> repository, IMapper mapper) : IFlightCrudService
 {
     /// <summary>
     /// Creates a new <see cref="Flight"/> entity and returns its DTO.

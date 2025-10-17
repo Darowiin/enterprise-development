@@ -9,9 +9,9 @@ namespace AirCompany.Application.Service;
 
 /// <summary>
 /// Service that provides CRUD operations for <see cref="Ticket"/> entities.
-/// Implements <see cref="ITicketCRUDService"/> for Ticket DTOs.
+/// Implements <see cref="ITicketCrudService"/> for Ticket DTOs.
 /// </summary>
-public class TicketService(IRepository<Ticket, int> repository, IMapper mapper) : ITicketCRUDService
+public class TicketService(IRepository<Ticket, int> repository, IMapper mapper) : ITicketCrudService
 {
     /// <summary>
     /// Creates a new <see cref="Ticket"/> entity and returns its DTO.

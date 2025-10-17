@@ -29,9 +29,9 @@ builder.Services.AddSingleton<IRepository<Passenger, int>, PassengerInMemoryRepo
 builder.Services.AddSingleton<IRepository<AircraftModel, int>, AircraftModelInMemoryRepository>();
 builder.Services.AddSingleton<IRepository<AircraftFamily, int>, AircraftFamilyInMemoryRepository>();
 
-builder.Services.AddScoped<IFlightCRUDService, FlightService>();
-builder.Services.AddScoped<ITicketCRUDService, TicketService>();
-builder.Services.AddScoped<IPassengerCRUDService, PassengerService>();
+builder.Services.AddScoped<IFlightCrudService, FlightService>();
+builder.Services.AddScoped<ITicketCrudService, TicketService>();
+builder.Services.AddScoped<IPassengerCrudService, PassengerService>();
 builder.Services.AddScoped<IAircraftModelReadService, AirCraftModelService>();
 builder.Services.AddScoped<IAircraftFamilyReadService, AirCraftFamilyService>();
 

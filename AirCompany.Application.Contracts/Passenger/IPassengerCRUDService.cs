@@ -5,7 +5,7 @@ namespace AirCompany.Application.Contracts.Passenger;
 /// <summary>
 /// Passenger service interface for performing CRUD operations with related entites.
 /// </summary>
-public interface IPassengerCRUDService : IApplicationCRUDService<PassengerDto, PassengerCreateUpdateDto, int>
+public interface IPassengerCrudService : IApplicationCrudService<PassengerDto, PassengerCreateUpdateDto, int>
 {
     /// <summary>
     /// Retrieves all <see cref="TicketDto"/> instances associated with a specific passenger.

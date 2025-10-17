@@ -11,7 +11,7 @@ namespace AirCompany.Api.Host.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class TicketController(ITicketCRUDService service, ILogger<TicketController> logger) 
+public class TicketController(ITicketCrudService service, ILogger<TicketController> logger) 
     : CrudControllerBase<TicketDto, TicketCreateUpdateDto, int> (service, logger) 
 {
     /// <summary>

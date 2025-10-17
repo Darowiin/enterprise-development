@@ -14,7 +14,7 @@ namespace AirCompany.Api.Host.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
-    IApplicationCRUDService<TDto, TCreateUpdateDto, TKey> appService,
+    IApplicationCrudService<TDto, TCreateUpdateDto, TKey> appService,
     ILogger<CrudControllerBase<TDto, TCreateUpdateDto, TKey>> logger)
     : ControllerBase
     where TDto : class

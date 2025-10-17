@@ -5,10 +5,10 @@ using AirCompany.Application.Contracts.Ticket;
 namespace AirCompany.Application.Contracts.Flight;
 
 /// <summary>
-/// Service interface for managing <see cref="Flight"/> entities.
+/// Service interface for managing flight entities.
 /// Provides CRUD operations and specialized queries for flights, including related models, tickets.
 /// </summary>
-public interface IFlightCRUDService : IApplicationCRUDService<FlightDto, FlightCreateUpdateDto, int>
+public interface IFlightCrudService : IApplicationCrudService<FlightDto, FlightCreateUpdateDto, int>
 {
     /// <summary>
     /// Retrieves the <see cref="AircraftModelDto"/> associated with a specific flight.

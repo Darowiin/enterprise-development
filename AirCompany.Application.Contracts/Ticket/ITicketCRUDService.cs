@@ -6,7 +6,7 @@ namespace AirCompany.Application.Contracts.Ticket;
 /// <summary>
 /// Ticket service interface for performing CRUD operations with related entities.
 /// </summary>
-public interface ITicketCRUDService: IApplicationCRUDService<TicketDto, TicketCreateUpdateDto, int>
+public interface ITicketCrudService: IApplicationCrudService<TicketDto, TicketCreateUpdateDto, int>
 {
     /// <summary>
     /// Retrieves the <see cref="PassengerDto"/> associated with the specified ticket.
