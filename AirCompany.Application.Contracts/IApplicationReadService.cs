@@ -14,11 +14,11 @@ public interface IApplicationReadService<TDto, TKey>
     /// </summary>
     /// <param name="dtoId">The DTO identifier.</param>
     /// <returns>The found DTO.</returns>
-    public TDto Get(TKey dtoId);
+    public Task<TDto> Get(TKey dtoId);
 
     /// <summary>
     /// Retrieves all DTOs.
     /// </summary>
     /// <returns>A list of all DTOs.</returns>
-    public List<TDto> GetAll();
+    public Task<IList<TDto>> GetAll();
 }

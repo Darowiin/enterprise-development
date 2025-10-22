@@ -1,5 +1,4 @@
-﻿using AirCompany.Application.Contracts;
-using AirCompany.Application.Contracts.AircraftFamily;
+﻿using AirCompany.Application.Contracts.AircraftFamily;
 using AirCompany.Application.Contracts.AircraftModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,8 +9,8 @@ namespace AirCompany.Api.Host.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class AircraftFamilyController(IAircraftFamilyReadService service, ILogger<AircraftFamilyController> logger) 
-    : ReadControllerBase<AircraftFamilyDto, int> (service, logger) 
+public class AircraftFamilyController(IAircraftFamilyReadService service, ILogger<AircraftFamilyController> logger)
+    : ReadControllerBase<AircraftFamilyDto, int>(service, logger)
 {
     /// <summary>
     /// Retrieves all aircraft models belonging to a specific aircraft family.
@@ -25,12 +24,12 @@ public class AircraftFamilyController(IAircraftFamilyReadService service, ILogge
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<List<AircraftModelDto>> GetAircraftModels(int id)
-        => ExecuteWithLogging(nameof(GetAircraftModels), () =>
+    public async Task<ActionResult<IList<AircraftModelDto>>> GetAircraftModels(int id)
+        => await ExecuteWithLogging(nameof(GetAircraftModels), async () =>
         {
             try
             {
-                var result = service.GetAircraftModels(id);
+                var result = await service.GetAircraftModels(id);
                 return Ok(result);
             }
             catch (KeyNotFoundException)

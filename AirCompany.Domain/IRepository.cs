@@ -19,7 +19,7 @@ public interface IRepository<TEntity, TKey>
     /// Adds a new entity to the repository.
     /// </summary>
     /// <param name="entity">The entity instance to add.</param>
-    public void Create(TEntity entity);
+    public Task<TEntity> Create(TEntity entity);
 
     /// <summary>
     /// Retrieves an entity from the repository by its identifier.
@@ -29,7 +29,7 @@ public interface IRepository<TEntity, TKey>
     /// The entity with the specified identifier, or <see langword="null"/> 
     /// if no entity with such an identifier exists.
     /// </returns>
-    public TEntity? Get(TKey entityId);
+    public Task<TEntity?> Get(TKey entityId);
 
     /// <summary>
     /// Retrieves all entities stored in the repository.
@@ -37,17 +37,17 @@ public interface IRepository<TEntity, TKey>
     /// <returns>
     /// A list containing all entities in the repository.
     /// </returns>
-    public List<TEntity> GetAll();
+    public Task<IList<TEntity>> GetAll();
 
     /// <summary>
     /// Updates an existing entity in the repository.
     /// </summary>
     /// <param name="entity">The entity instance containing updated data.</param>
-    public void Update(TEntity entity);
+    public Task<TEntity> Update(TEntity entity);
 
     /// <summary>
     /// Removes an entity from the repository by its identifier.
     /// </summary>
     /// <param name="entityId">The unique identifier of the entity to delete.</param>
-    public void Delete(TKey entityId);
+    public Task<bool> Delete(TKey entityId);
 }

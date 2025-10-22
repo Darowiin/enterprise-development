@@ -87,7 +87,7 @@ public class DataSeeder
 
         Flights.AddRange(
         [
-            new Flight 
+            new Flight
             {
                 Id = 1,
                 Code = "SU1001",
@@ -96,10 +96,10 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,1,10,0,0),
                 ArrivalDateTime = new DateTime(2025,10,1,12,0,0),
                 FlightDuration = TimeSpan.FromHours(2),
-                AircraftModel = Models[0] 
+                AircraftModel = Models[0]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 2,
                 Code = "SU1002",
                 DepartureAirport = "SVO",
@@ -109,89 +109,89 @@ public class DataSeeder
                 FlightDuration = TimeSpan.FromHours(6),
                 AircraftModel = Models[1]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 3,
                 Code = "SU1003",
                 DepartureAirport = "LED",
                 ArrivalAirport = "CDG",
-                DepartureDateTime = new DateTime(2025,10,3,9,0,0), 
+                DepartureDateTime = new DateTime(2025,10,3,9,0,0),
                 ArrivalDateTime = new DateTime(2025,10,3,12,0,0),
                 FlightDuration = TimeSpan.FromHours(3),
                 AircraftModel = Models[2]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 4,
                 Code = "SU1004",
                 DepartureAirport = "VKO",
                 ArrivalAirport = "DXB",
                 DepartureDateTime = new DateTime(2025,10,4,14,0,0),
-                ArrivalDateTime = new DateTime(2025,10,4,20,0,0), 
+                ArrivalDateTime = new DateTime(2025,10,4,20,0,0),
                 FlightDuration = TimeSpan.FromHours(6),
                 AircraftModel = Models[3]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 5,
                 Code = "SU1005",
                 DepartureAirport = "SVO",
-                ArrivalAirport = "SIN", 
+                ArrivalAirport = "SIN",
                 DepartureDateTime = new DateTime(2025,10,5,22,0,0),
-                ArrivalDateTime = new DateTime(2025,10,6,6,0,0), 
+                ArrivalDateTime = new DateTime(2025,10,6,6,0,0),
                 FlightDuration = TimeSpan.FromHours(8),
                 AircraftModel = Models[4]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 6,
                 Code = "SU1006",
                 DepartureAirport = "SVO",
-                ArrivalAirport = "HND", 
-                DepartureDateTime = new DateTime(2025,10,6,6,0,0), 
-                ArrivalDateTime = new DateTime(2025,10,6,15,0,0), 
+                ArrivalAirport = "HND",
+                DepartureDateTime = new DateTime(2025,10,6,6,0,0),
+                ArrivalDateTime = new DateTime(2025,10,6,15,0,0),
                 FlightDuration = TimeSpan.FromHours(9),
                 AircraftModel = Models[5]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 7,
                 Code = "SU1007",
                 DepartureAirport = "LED",
-                ArrivalAirport = "BER", 
+                ArrivalAirport = "BER",
                 DepartureDateTime = new DateTime(2025,10,7,11,0,0),
-                ArrivalDateTime = new DateTime(2025,10,7,13,0,0), 
+                ArrivalDateTime = new DateTime(2025,10,7,13,0,0),
                 FlightDuration = TimeSpan.FromHours(2),
                 AircraftModel = Models[6]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 8,
                 Code = "SU1008",
                 DepartureAirport = "SVO",
-                ArrivalAirport = "LHR", 
+                ArrivalAirport = "LHR",
                 DepartureDateTime = new DateTime(2025,10,8,16,0,0),
-                ArrivalDateTime = new DateTime(2025,10,8,18,0,0), 
+                ArrivalDateTime = new DateTime(2025,10,8,18,0,0),
                 FlightDuration = TimeSpan.FromHours(2),
                 AircraftModel = Models[7]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 9,
                 Code = "SU1009",
                 DepartureAirport = "VKO",
-                ArrivalAirport = "CDG", 
-                DepartureDateTime = new DateTime(2025,10,9,8,0,0), 
+                ArrivalAirport = "CDG",
+                DepartureDateTime = new DateTime(2025,10,9,8,0,0),
                 ArrivalDateTime = new DateTime(2025,10,9,11,0,0),
                 FlightDuration = TimeSpan.FromHours(3),
                 AircraftModel = Models[8]
             },
-            new Flight 
-            { 
+            new Flight
+            {
                 Id = 10,
                 Code = "SU1010",
                 DepartureAirport = "SVO",
-                ArrivalAirport = "JFK", 
+                ArrivalAirport = "JFK",
                 DepartureDateTime = new DateTime(2025,10,10,7,0,0),
                 ArrivalDateTime = new DateTime(2025,10,10,13,0,0),
                 FlightDuration = TimeSpan.FromHours(6),

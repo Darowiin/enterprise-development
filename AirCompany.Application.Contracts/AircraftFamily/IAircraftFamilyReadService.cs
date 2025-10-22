@@ -5,7 +5,7 @@ namespace AirCompany.Application.Contracts.AircraftFamily;
 /// <summary>
 /// Aircraft family service interface for performing read operations.
 /// </summary>
-public interface IAircraftFamilyReadService: IApplicationReadService<AircraftFamilyDto, int>
+public interface IAircraftFamilyReadService : IApplicationReadService<AircraftFamilyDto, int>
 {
     /// <summary>
     /// Retrieves a collection of <see cref="AircraftModelDto"/> objects
@@ -16,5 +16,5 @@ public interface IAircraftFamilyReadService: IApplicationReadService<AircraftFam
     /// <exception cref="KeyNotFoundException">
     /// Thrown if an aircraft family with the given <paramref name="familyId"/> exists.
     /// </exception>
-    public List<AircraftModelDto> GetAircraftModels(int familyId);
+    public Task<IList<AircraftModelDto>> GetAircraftModels(int familyId);
 }

@@ -1,5 +1,4 @@
-﻿using AirCompany.Application.Contracts;
-using AirCompany.Application.Contracts.Passenger;
+﻿using AirCompany.Application.Contracts.Passenger;
 using AirCompany.Application.Contracts.Ticket;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,8 +9,8 @@ namespace AirCompany.Api.Host.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class PassengerController(IPassengerCrudService service, ILogger<PassengerController> logger) 
-    : CrudControllerBase<PassengerDto, PassengerCreateUpdateDto, int> (service, logger) 
+public class PassengerController(IPassengerCrudService service, ILogger<PassengerController> logger)
+    : CrudControllerBase<PassengerDto, PassengerCreateUpdateDto, int>(service, logger)
 {
     /// <summary>
     /// Retrieves all tickets associated with the specified passenger.
@@ -25,12 +24,12 @@ public class PassengerController(IPassengerCrudService service, ILogger<Passenge
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<List<TicketDto>> GetTickets(int id)
-        => ExecuteWithLogging(nameof(GetTickets), () =>
+    public async Task<ActionResult<IList<TicketDto>>> GetTickets(int id)
+        => await ExecuteWithLogging(nameof(GetTickets), async () =>
         {
             try
             {
-                var result = service.GetTickets(id);
+                var result = await service.GetTickets(id);
                 return Ok(result);
             }
             catch (KeyNotFoundException)

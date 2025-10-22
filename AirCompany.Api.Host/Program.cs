@@ -1,4 +1,3 @@
-using AirCompany.Application.Contracts;
 using AirCompany.Application.Contracts.AircraftFamily;
 using AirCompany.Application.Contracts.AircraftModel;
 using AirCompany.Application.Contracts.Flight;

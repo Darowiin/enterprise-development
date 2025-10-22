@@ -12,10 +12,10 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     /// Returns the top 5 flights with the highest passenger count.
     /// </summary>
     [Fact]
-    public void GetTopFlightsByPassengerCount_ShouldReturnFlightsOrderedByPassengerCount()
+    public async Task GetTopFlightsByPassengerCount_ShouldReturnFlightsOrderedByPassengerCount()
     {
         // Arrange
-        var flights = fixture.FlightRepo.GetAll();
+        var flights = await fixture.FlightRepo.GetAll();
 
         // Act
         var topFlights = flights
@@ -41,10 +41,10 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     /// Ensures all returned flights have the shortest duration among all flights.
     /// </summary>
     [Fact]
-    public void GetFlightsWithMinimalDuration_ShouldReturnFlightsWithShortestDuration()
+    public async Task GetFlightsWithMinimalDuration_ShouldReturnFlightsWithShortestDuration()
     {
         // Arrange
-        var flights = fixture.FlightRepo.GetAll();
+        var flights = await fixture.FlightRepo.GetAll();
 
         // Act
         var minDuration = flights.Min(f => f.FlightDuration ?? TimeSpan.MaxValue);
@@ -62,10 +62,11 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     /// Returns passengers ordered by their full name.
     /// </summary>
     [Fact]
-    public void GetPassengersWithZeroBaggageByFlight_ShouldReturnOrderedByName()
+    public async Task GetPassengersWithZeroBaggageByFlight_ShouldReturnOrderedByName()
     {
         // Arrange
-        var selectedFlight = fixture.FlightRepo.GetAll().First(f => f.Code == "SU1001");
+        var flights = await fixture.FlightRepo.GetAll();
+        var selectedFlight = flights.First(f => f.Code == "SU1001");
 
         // Act
         var passengersWithNoBaggage = selectedFlight.Tickets!
@@ -89,13 +90,14 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     /// Ensures all returned flights match the model and period.
     /// </summary>
     [Fact]
-    public void GetFlightsByModelAndPeriod_ShouldReturnOnlyMatchingFlights()
+    public async Task GetFlightsByModelAndPeriod_ShouldReturnOnlyMatchingFlights()
     {
         // Arrange
-        var selectedModel = fixture.ModelRepo.GetAll().First();
+        var models = await fixture.ModelRepo.GetAll();
+        var selectedModel = models.First();
         var startDate = new DateTime(2025, 10, 1);
         var endDate = new DateTime(2025, 10, 31);
-        var flights = fixture.FlightRepo.GetAll();
+        var flights = await fixture.FlightRepo.GetAll();
 
         // Act
         var flightsInPeriod = flights
@@ -118,12 +120,12 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     /// Ensures all returned flights match the requested route.
     /// </summary>
     [Fact]
-    public void GetFlightsByRoute_ShouldReturnFlightsWithMatchingDepartureAndArrival()
+    public async Task GetFlightsByRoute_ShouldReturnFlightsWithMatchingDepartureAndArrival()
     {
         // Arrange
         var departure = "SVO";
         var arrival = "LHR";
-        var flights = fixture.FlightRepo.GetAll();
+        var flights = await fixture.FlightRepo.GetAll();
 
         // Act
         var flightsByRoute = flights

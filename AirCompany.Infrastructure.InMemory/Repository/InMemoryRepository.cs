@@ -40,13 +40,16 @@ public abstract class InMemoryRepository<TEntity, TKey> : IRepository<TEntity, T
     /// Creates a new entity and assigns a unique ID.
     /// </summary>
     /// <param name="entity">Entity to create.</param>
-    public virtual void Create(TEntity entity)
+    public virtual Task<TEntity> Create(TEntity entity)
     {
         if (typeof(TKey) == typeof(int))
         {
             SetEntityId(entity, (TKey)(object)_currentId++);
         }
+
         _entities.Add(entity);
+
+        return Task.FromResult(entity);
     }
 
     /// <summary>
@@ -54,35 +57,37 @@ public abstract class InMemoryRepository<TEntity, TKey> : IRepository<TEntity, T
     /// </summary>
     /// <param name="entityId">Entity ID.</param>
     /// <returns>The entity if found; otherwise, <see langword="null"/>.</returns>
-    public virtual TEntity? Get(TKey entityId)
-    {
-        return _entities.FirstOrDefault(e => GetEntityId(e).Equals(entityId));
-    }
+    public virtual Task<TEntity?> Get(TKey entityId) => Task.FromResult(_entities.FirstOrDefault(e => GetEntityId(e).Equals(entityId)));
 
     /// <summary>
     /// Returns all entities stored in memory.
     /// </summary>
-    public virtual List<TEntity> GetAll() => [.. _entities];
+    public virtual Task<IList<TEntity>> GetAll() => Task.FromResult<IList<TEntity>>([.. _entities]);
 
     /// <summary>
     /// Updates an existing entity by replacing it with the new version.
     /// </summary>
     /// <param name="entity">Entity to update.</param>
-    public virtual void Update(TEntity entity)
+    public virtual Task<TEntity> Update(TEntity entity)
     {
         Delete(GetEntityId(entity));
         _entities.Add(entity);
+        return Task.FromResult(entity);
     }
 
     /// <summary>
     /// Deletes an entity by its ID, if it exists.
     /// </summary>
     /// <param name="entityId">Entity ID.</param>
-    public virtual void Delete(TKey entityId)
+    public virtual Task<bool> Delete(TKey entityId)
     {
-        var entity = Get(entityId);
+        var entity = Get(entityId).Result;
         if (entity != null)
+        {
             _entities.Remove(entity);
+            return Task.FromResult(true);
+        }
+        return Task.FromResult(false);
     }
 
     /// <summary>

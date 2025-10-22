@@ -1,5 +1,4 @@
-﻿using AirCompany.Application.Contracts.AircraftModel;
-using AirCompany.Application.Contracts.Flight;
+﻿using AirCompany.Application.Contracts.Flight;
 using AirCompany.Application.Contracts.Passenger;
 using AirCompany.Application.Contracts.Ticket;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +10,8 @@ namespace AirCompany.Api.Host.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class TicketController(ITicketCrudService service, ILogger<TicketController> logger) 
-    : CrudControllerBase<TicketDto, TicketCreateUpdateDto, int> (service, logger) 
+public class TicketController(ITicketCrudService service, ILogger<TicketController> logger)
+    : CrudControllerBase<TicketDto, TicketCreateUpdateDto, int>(service, logger)
 {
     /// <summary>
     /// Retrieves the passenger associated with the specified ticket.
@@ -25,12 +24,12 @@ public class TicketController(ITicketCrudService service, ILogger<TicketControll
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<PassengerDto> GetPassenger(int id)
-        => ExecuteWithLogging(nameof(GetPassenger), () =>
+    public async Task<ActionResult<PassengerDto>> GetPassenger(int id)
+        => await ExecuteWithLogging(nameof(GetPassenger), async () =>
         {
             try
             {
-                var result = service.GetPassenger(id);
+                var result = await service.GetPassenger(id);
                 return Ok(result);
             }
             catch (KeyNotFoundException)
@@ -50,12 +49,12 @@ public class TicketController(ITicketCrudService service, ILogger<TicketControll
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<FlightDto> GetFlight(int id)
-        => ExecuteWithLogging(nameof(GetFlight), () =>
+    public async Task<ActionResult<FlightDto>> GetFlight(int id)
+        => await ExecuteWithLogging(nameof(GetFlight), async () =>
         {
             try
             {
-                var result = service.GetFlight(id);
+                var result = await service.GetFlight(id);
                 return Ok(result);
             }
             catch (KeyNotFoundException)

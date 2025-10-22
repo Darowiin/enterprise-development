@@ -10,8 +10,8 @@ namespace AirCompany.Api.Host.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class AircraftModelController(IAircraftModelReadService service, ILogger<AircraftModelController> logger) 
-    : ReadControllerBase<AircraftModelDto, int> (service, logger) 
+public class AircraftModelController(IAircraftModelReadService service, ILogger<AircraftModelController> logger)
+    : ReadControllerBase<AircraftModelDto, int>(service, logger)
 {
     /// <summary>
     /// Retrieves the aircraft family to which the specified aircraft model belongs.
@@ -25,12 +25,12 @@ public class AircraftModelController(IAircraftModelReadService service, ILogger<
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<AircraftFamilyDto> GetAircraftFamily(int id)
-        => ExecuteWithLogging(nameof(GetAircraftFamily), () =>
+    public async Task<ActionResult<AircraftFamilyDto>> GetAircraftFamily(int id)
+        => await ExecuteWithLogging(nameof(GetAircraftFamily), async () =>
         {
             try
             {
-                var result = service.GetAircraftFamily(id);
+                var result = await service.GetAircraftFamily(id);
                 return Ok(result);
             }
             catch (KeyNotFoundException)
@@ -51,12 +51,12 @@ public class AircraftModelController(IAircraftModelReadService service, ILogger<
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<List<FlightDto>> GetFlights(int id)
-        => ExecuteWithLogging(nameof(GetFlights), () =>
+    public async Task<ActionResult<IList<FlightDto>>> GetFlights(int id)
+        => await ExecuteWithLogging(nameof(GetFlights), async () =>
         {
             try
             {
-                var result = service.GetFlights(id);
+                var result = await service.GetFlights(id);
                 return Ok(result);
             }
             catch (KeyNotFoundException)

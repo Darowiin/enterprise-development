@@ -1,6 +1,4 @@
-﻿using AirCompany.Application.Contracts.Passenger;
-
-namespace AirCompany.Application.Contracts.Flight;
+﻿namespace AirCompany.Application.Contracts.Flight;
 
 /// <summary>
 /// DTO representing a flight.

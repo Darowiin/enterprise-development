@@ -16,7 +16,7 @@ public interface IAircraftModelReadService : IApplicationReadService<AircraftMod
     /// <exception cref="KeyNotFoundException">
     /// Thrown if no aircraft model with the given <paramref name="modelId"/> exists.
     /// </exception>
-    public AircraftFamilyDto GetAircraftFamily(int modelId);
+    public Task<AircraftFamilyDto> GetAircraftFamily(int modelId);
 
     /// <summary>
     /// Retrieves all <see cref="FlightDto"/> objects associated with the specified aircraft model.
@@ -26,5 +26,5 @@ public interface IAircraftModelReadService : IApplicationReadService<AircraftMod
     /// <exception cref="KeyNotFoundException">
     /// Thrown if no aircraft model with the given <paramref name="modelId"/> exists.
     /// </exception>
-    public List<FlightDto> GetFlights(int modelId);
+    public Task<IList<FlightDto>> GetFlights(int modelId);
 }

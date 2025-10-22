@@ -12,5 +12,5 @@ public interface IPassengerCrudService : IApplicationCrudService<PassengerDto, P
     /// </summary>
     /// <param name="passengerId">The unique identifier of the passenger.</param>
     /// <returns>A list of tickets belonging to the specified passenger.</returns>
-    public List<TicketDto> GetTickets(int passengerId);
+    public Task<IList<TicketDto>> GetTickets(int passengerId);
 }

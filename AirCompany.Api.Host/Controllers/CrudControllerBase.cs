@@ -29,10 +29,10 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [HttpPost]
     [ProducesResponseType(201)]
     [ProducesResponseType(500)]
-    public ActionResult<TDto> Create([FromBody] TCreateUpdateDto newDto)
-        => ExecuteWithLogging(nameof(Create), () =>
+    public async Task<ActionResult<TDto>> Create([FromBody] TCreateUpdateDto newDto)
+        => await ExecuteWithLogging(nameof(Create), async () =>
         {
-            var result = appService.Create(newDto);
+            var result = await appService.Create(newDto);
             return CreatedAtAction(nameof(Get), result);
         });
 
@@ -46,14 +46,14 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<TDto> Edit(TKey id, [FromBody] TCreateUpdateDto newDto)
-        => ExecuteWithLogging(nameof(Edit), () =>
+    public async Task<ActionResult<TDto>> Edit(TKey id, [FromBody] TCreateUpdateDto newDto)
+        => await ExecuteWithLogging(nameof(Edit), async () =>
         {
             try
             {
-                var result = appService.Update(newDto, id);
+                var result = await appService.Update(newDto, id);
                 return Ok(result);
-            } 
+            }
             catch (KeyNotFoundException)
             {
                 return NotFound();
@@ -66,12 +66,13 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <param name="id">Identifier of the entity to delete.</param>
     [HttpDelete("{id}")]
     [ProducesResponseType(200)]
+    [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public IActionResult Delete(TKey id)
-        => ExecuteWithLogging(nameof(Delete), () =>
+    public async Task<IActionResult> Delete(TKey id)
+        => await ExecuteWithLogging(nameof(Delete), async () =>
         {
-            appService.Delete(id);
-            return Ok();
+            var result = await appService.Delete(id);
+            return result ? Ok() : NoContent();
         });
 
     /// <summary>
@@ -81,8 +82,8 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [HttpGet]
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
-    public ActionResult<IList<TDto>> GetAll()
-        => ExecuteWithLogging(nameof(GetAll), () => Ok(appService.GetAll()));
+    public async Task<ActionResult<IList<TDto>>> GetAll()
+        => await ExecuteWithLogging(nameof(GetAll), async () => Ok( await appService.GetAll()));
 
     /// <summary>
     /// Retrieves an entity by its ID.
@@ -93,14 +94,14 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<TDto> Get(TKey id)
-        => ExecuteWithLogging(nameof(Get), () =>
+    public async Task<ActionResult<TDto>> Get(TKey id)
+        => await ExecuteWithLogging(nameof(Get), async () =>
         {
             try
             {
-                var result = appService.Get(id);
+                var result = await appService.Get(id);
                 return Ok(result);
-            } 
+            }
             catch (KeyNotFoundException)
             {
                 return NotFound();
@@ -110,12 +111,12 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <summary>
     /// Helper method for consistent logging and error handling.
     /// </summary>
-    protected ActionResult ExecuteWithLogging(string method, Func<ActionResult> action)
+    protected async Task<ActionResult> ExecuteWithLogging(string method, Func<Task<ActionResult>> action)
     {
         logger.LogInformation("{Method} of {Controller} was called", method, GetType().Name);
         try
         {
-            var result = action();
+            var result = await action();
             logger.LogInformation("{Method} of {Controller} executed successfully", method, GetType().Name);
             return result;
         }

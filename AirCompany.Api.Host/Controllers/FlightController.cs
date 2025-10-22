@@ -21,12 +21,12 @@ public class FlightController(IFlightCrudService service, ILogger<FlightControll
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<AircraftModelDto> GetAircraftModel(int id)
-        => ExecuteWithLogging(nameof(GetAircraftModel), () =>
+    public async Task<ActionResult<AircraftModelDto>> GetAircraftModel(int id)
+        => await ExecuteWithLogging(nameof(GetAircraftModel), async () =>
         {
             try
             {
-                var result = service.GetAircraftModel(id);
+                var result = await service.GetAircraftModel(id);
                 return Ok(result);
             }
             catch (KeyNotFoundException)
@@ -42,12 +42,12 @@ public class FlightController(IFlightCrudService service, ILogger<FlightControll
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public ActionResult<List<TicketDto>> GetTickets(int id)
-        => ExecuteWithLogging(nameof(GetTickets), () =>
+    public async Task<ActionResult<IList<TicketDto>>> GetTickets(int id)
+        => await ExecuteWithLogging(nameof(GetTickets), async () =>
         {
             try
             {
-                var result = service.GetTickets(id);
+                var result = await service.GetTickets(id);
                 return Ok(result);
             }
             catch (KeyNotFoundException)
@@ -63,10 +63,10 @@ public class FlightController(IFlightCrudService service, ILogger<FlightControll
     [ProducesResponseType(200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public ActionResult<List<FlightDto>> GetTop5FlightsByPassengerCount()
-        => ExecuteWithLogging(nameof(GetTop5FlightsByPassengerCount), () =>
+    public async Task<ActionResult<IList<FlightDto>>> GetTop5FlightsByPassengerCount()
+        => await ExecuteWithLogging(nameof(GetTop5FlightsByPassengerCount), async () =>
         {
-            var result = service.GetTop5FlightsByPassengerCount();
+            var result = await service.GetTop5FlightsByPassengerCount();
             return result is not null && result.Count > 0 ? Ok(result) : NoContent();
         });
 
@@ -77,10 +77,10 @@ public class FlightController(IFlightCrudService service, ILogger<FlightControll
     [ProducesResponseType(200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public ActionResult<List<FlightDto>> GetFlightsWithMinimalDuration()
-        => ExecuteWithLogging(nameof(GetFlightsWithMinimalDuration), () =>
+    public async Task<ActionResult<IList<FlightDto>>> GetFlightsWithMinimalDuration()
+        => await ExecuteWithLogging(nameof(GetFlightsWithMinimalDuration), async () =>
         {
-            var result = service.GetFlightsWithMinimalDuration();
+            var result = await service.GetFlightsWithMinimalDuration();
             return result is not null && result.Count > 0 ? Ok(result) : NoContent();
         });
 
@@ -91,10 +91,10 @@ public class FlightController(IFlightCrudService service, ILogger<FlightControll
     [ProducesResponseType(200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public ActionResult<List<PassengerDto>> GetPassengersWithZeroBaggageByFlight([FromQuery] int flightId)
-        => ExecuteWithLogging(nameof(GetPassengersWithZeroBaggageByFlight), () =>
+    public async Task<ActionResult<IList<PassengerDto>>> GetPassengersWithZeroBaggageByFlight([FromQuery] int flightId)
+        => await ExecuteWithLogging(nameof(GetPassengersWithZeroBaggageByFlight), async () =>
         {
-            var result = service.GetPassengersWithZeroBaggageByFlight(flightId);
+            var result = await service.GetPassengersWithZeroBaggageByFlight(flightId);
             return result is not null && result.Count > 0 ? Ok(result) : NoContent();
         });
 
@@ -105,10 +105,10 @@ public class FlightController(IFlightCrudService service, ILogger<FlightControll
     [ProducesResponseType(200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public ActionResult<List<FlightDto>> GetFlightsByModelAndPeriod([FromQuery] int modelId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        => ExecuteWithLogging(nameof(GetFlightsByModelAndPeriod), () =>
+    public async Task<ActionResult<IList<FlightDto>>> GetFlightsByModelAndPeriod([FromQuery] int modelId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        => await ExecuteWithLogging(nameof(GetFlightsByModelAndPeriod), async () =>
         {
-            var result = service.GetFlightsByModelAndPeriod(modelId, startDate, endDate);
+            var result = await service.GetFlightsByModelAndPeriod(modelId, startDate, endDate);
             return result is not null && result.Count > 0 ? Ok(result) : NoContent();
         });
 
@@ -119,10 +119,10 @@ public class FlightController(IFlightCrudService service, ILogger<FlightControll
     [ProducesResponseType(200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public ActionResult<List<FlightDto>> GetFlightsByRoute([FromQuery] string departure, [FromQuery] string arrival)
-        => ExecuteWithLogging(nameof(GetFlightsByRoute), () =>
+    public async Task<ActionResult<IList<FlightDto>>> GetFlightsByRoute([FromQuery] string departure, [FromQuery] string arrival)
+        => await ExecuteWithLogging(nameof(GetFlightsByRoute), async () =>
         {
-            var result = service.GetFlightsByRoute(departure, arrival);
+            var result = await service.GetFlightsByRoute(departure, arrival);
             return result is not null && result.Count > 0 ? Ok(result) : NoContent();
         });
 }
