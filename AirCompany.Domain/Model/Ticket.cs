@@ -11,6 +11,9 @@ public class Ticket
     /// </summary>
     public required int Id { get; set; }
 
+    /// <summary>
+    /// Foreign key referencing the <see cref="Flight"/> this ticket is associated with.
+    /// </summary>
     public required int FlightId { get; set; }
 
     /// <summary>
@@ -18,6 +21,9 @@ public class Ticket
     /// </summary>
     public virtual Flight? Flight { get; set; }
 
+    /// <summary>
+    /// Foreign key referencing the <see cref="Model.Passenger"/> who owns this ticket.
+    /// </summary>
     public required int PassengerId { get; set; }
 
     /// <summary>

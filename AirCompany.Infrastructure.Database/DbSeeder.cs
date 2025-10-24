@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirCompany.Infrastructure.Database;
 
+
+/// <summary>
+/// Seeds the database with initial data using <see cref="DataSeeder"/>.
+/// </summary>
 public class DbSeeder(AirCompanyDbContext context)
 {
+    /// <summary>
+    /// Seeds the database asynchronously with predefined data.
+    /// </summary>
     public async Task Seed()
     {
         var seed = new DataSeeder();

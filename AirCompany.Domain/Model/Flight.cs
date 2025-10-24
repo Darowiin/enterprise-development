@@ -41,10 +41,13 @@ public class Flight
     /// </summary>
     public TimeSpan? FlightDuration { get; set; }
 
+    /// <summary>
+    /// Foreign key referencing the <see cref="AircraftModel"/> operating this flight.
+    /// </summary>
     public required int ModelId { get; set; }
 
     /// <summary>
-    /// The <see cref="Model.AircraftModel"/> operating this flight.
+    /// The <see cref="AircraftModel"/> operating this flight.
     /// </summary>
     public virtual AircraftModel? Model { get; set; }
 

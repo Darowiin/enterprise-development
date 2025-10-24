@@ -1,18 +1,44 @@
-﻿using AirCompany.Domain.Data;
-using AirCompany.Domain.Model;
+﻿using AirCompany.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirCompany.Infrastructure.Database;
 
+/// <summary>
+/// EF Core database context for domain.
+/// Configures entities, relationships, and value converters.
+/// </summary>
 public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options) : DbContext(options)
 {
+    /// <summary>
+    /// Aircraft families in the database.
+    /// </summary>
     public DbSet<AircraftFamily> AircraftFamilies { get; set; }
+
+    /// <summary>
+    /// Aircraft models in the database.
+    /// </summary>
     public DbSet<AircraftModel> AircraftModels { get; set; }
+
+    /// <summary>
+    /// Passengers in the database.
+    /// </summary>
     public DbSet<Passenger> Passengers { get; set; }
+
+    /// <summary>
+    /// Flights in the database.
+    /// </summary>
     public DbSet<Flight> Flights { get; set; }
+
+    /// <summary>
+    /// Tickets in the database.
+    /// </summary>
     public DbSet<Ticket> Tickets { get; set; }
 
+    /// <summary>
+    /// Configures entity relationships, keys, indexes, and value conversions.
+    /// </summary>
+    /// <param name="modelBuilder">The model builder used to configure entities.</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())

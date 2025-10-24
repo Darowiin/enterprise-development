@@ -15,6 +15,9 @@ public class AircraftModel
     /// </summary>
     public required string ModelName { get; set; }
 
+    /// <summary>
+    /// Foreign key referencing the <see cref="AircraftFamily"/> this aircraft model belongs to.
+    /// </summary>
     public required int FamilyId { get; set; }
 
     /// <summary>
