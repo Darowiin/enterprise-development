@@ -79,7 +79,7 @@ public class FlightService(IRepository<Flight, int> repository, IMapper mapper) 
         var entity = await repository.Get(flightId)
                      ?? throw new KeyNotFoundException($"Entity with ID {flightId} not found");
 
-        return mapper.Map<AircraftModelDto>(entity.AircraftModel);
+        return mapper.Map<AircraftModelDto>(entity.Model!);
     }
 
     /// <summary>
@@ -159,7 +159,7 @@ public class FlightService(IRepository<Flight, int> repository, IMapper mapper) 
         var flights = await repository.GetAll();
 
         return mapper.Map<List<FlightDto>>(flights
-                        .Where(f => f.AircraftModel?.Id == modelId &&
+                        .Where(f => f.Model?.Id == modelId &&
                         f.DepartureDateTime.HasValue &&
                         f.DepartureDateTime.Value >= startDate &&
                         f.DepartureDateTime.Value <= endDate)

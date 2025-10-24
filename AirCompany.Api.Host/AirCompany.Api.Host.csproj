@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -9,14 +9,21 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.5.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.10" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AirCompany.Application.Contracts\AirCompany.Application.Contracts.csproj" />
     <ProjectReference Include="..\AirCompany.Application\AirCompany.Application.csproj" />
     <ProjectReference Include="..\AirCompany.Domain\AirCompany.Domain.csproj" />
+    <ProjectReference Include="..\AirCompany.Infrastructure.Database\AirCompany.Infrastructure.Database.csproj" />
     <ProjectReference Include="..\AirCompany.Infrastructure.InMemory\AirCompany.Infrastructure.InMemory.csproj" />
+    <ProjectReference Include="..\AirCompany.ServiceDefaults\AirCompany.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

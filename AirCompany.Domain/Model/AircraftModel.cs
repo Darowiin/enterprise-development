@@ -15,10 +15,12 @@ public class AircraftModel
     /// </summary>
     public required string ModelName { get; set; }
 
+    public required int FamilyId { get; set; }
+
     /// <summary>
     /// The <see cref="AircraftFamily"/> this aircraft model belongs to.
     /// </summary>
-    public required AircraftFamily Family { get; set; }
+    public virtual AircraftFamily? Family { get; set; }
 
     /// <summary>
     /// Maximum flight range of this aircraft model in kilometers.
@@ -38,5 +40,5 @@ public class AircraftModel
     /// <summary>
     /// Collection of <see cref="Flight"/>s operated by this aircraft model.
     /// </summary>
-    public List<Flight>? Flights { get; set; } = [];
+    public virtual List<Flight>? Flights { get; set; } = [];
 }

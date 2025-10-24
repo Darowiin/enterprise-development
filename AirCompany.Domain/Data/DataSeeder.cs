@@ -68,22 +68,17 @@ public class DataSeeder
 
         Models.AddRange(
         [
-            new AircraftModel { Id = 1, ModelName = "A320neo", Family = Families[0], FlightRangeKm = 6300, PassengerCapacity = 180, CargoCapacityKg = 20000 },
-            new AircraftModel { Id = 2, ModelName = "A321XLR", Family = Families[0], FlightRangeKm = 8700, PassengerCapacity = 206, CargoCapacityKg = 23000 },
-            new AircraftModel { Id = 3, ModelName = "737MAX8", Family = Families[1], FlightRangeKm = 6500, PassengerCapacity = 175, CargoCapacityKg = 19000 },
-            new AircraftModel { Id = 4, ModelName = "737MAX10", Family = Families[1], FlightRangeKm = 5950, PassengerCapacity = 188, CargoCapacityKg = 20000 },
-            new AircraftModel { Id = 5, ModelName = "E190", Family = Families[2], FlightRangeKm = 4400, PassengerCapacity = 100, CargoCapacityKg = 10000 },
-            new AircraftModel { Id = 6, ModelName = "E195-E2", Family = Families[2], FlightRangeKm = 4800, PassengerCapacity = 124, CargoCapacityKg = 11000 },
-            new AircraftModel { Id = 7, ModelName = "A330-300", Family = Families[3], FlightRangeKm = 11500, PassengerCapacity = 277, CargoCapacityKg = 45000 },
-            new AircraftModel { Id = 8, ModelName = "B787-8", Family = Families[4], FlightRangeKm = 13600, PassengerCapacity = 242, CargoCapacityKg = 50000 },
-            new AircraftModel { Id = 9, ModelName = "A350-900", Family = Families[5], FlightRangeKm = 15000, PassengerCapacity = 300, CargoCapacityKg = 60000 },
-            new AircraftModel { Id = 10, ModelName = "CRJ900", Family = Families[6], FlightRangeKm = 2900, PassengerCapacity = 90, CargoCapacityKg = 8000 }
+            new AircraftModel { Id = 1, ModelName = "A320neo", FamilyId = 1, FlightRangeKm = 6300, PassengerCapacity = 180, CargoCapacityKg = 20000 },
+            new AircraftModel { Id = 2, ModelName = "A321XLR", FamilyId = 1, FlightRangeKm = 8700, PassengerCapacity = 206, CargoCapacityKg = 23000 },
+            new AircraftModel { Id = 3, ModelName = "737MAX8", FamilyId = 2, FlightRangeKm = 6500, PassengerCapacity = 175, CargoCapacityKg = 19000 },
+            new AircraftModel { Id = 4, ModelName = "737MAX10", FamilyId = 2, FlightRangeKm = 5950, PassengerCapacity = 188, CargoCapacityKg = 20000 },
+            new AircraftModel { Id = 5, ModelName = "E190", FamilyId = 3, FlightRangeKm = 4400, PassengerCapacity = 100, CargoCapacityKg = 10000 },
+            new AircraftModel { Id = 6, ModelName = "E195-E2", FamilyId = 3, FlightRangeKm = 4800, PassengerCapacity = 124, CargoCapacityKg = 11000 },
+            new AircraftModel { Id = 7, ModelName = "A330-300", FamilyId = 4, FlightRangeKm = 11500, PassengerCapacity = 277, CargoCapacityKg = 45000 },
+            new AircraftModel { Id = 8, ModelName = "B787-8", FamilyId = 5, FlightRangeKm = 13600, PassengerCapacity = 242, CargoCapacityKg = 50000 },
+            new AircraftModel { Id = 9, ModelName = "A350-900", FamilyId = 6, FlightRangeKm = 15000, PassengerCapacity = 300, CargoCapacityKg = 60000 },
+            new AircraftModel { Id = 10, ModelName = "CRJ900", FamilyId = 7, FlightRangeKm = 2900, PassengerCapacity = 90, CargoCapacityKg = 8000 }
         ]);
-
-        foreach (var model in Models)
-        {
-            model.Family.Models!.Add(model);
-        }
 
         Flights.AddRange(
         [
@@ -96,7 +91,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,1,10,0,0),
                 ArrivalDateTime = new DateTime(2025,10,1,12,0,0),
                 FlightDuration = TimeSpan.FromHours(2),
-                AircraftModel = Models[0]
+                ModelId = 1
             },
             new Flight
             {
@@ -107,7 +102,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,2,15,0,0),
                 ArrivalDateTime = new DateTime(2025,10,2,21,0,0),
                 FlightDuration = TimeSpan.FromHours(6),
-                AircraftModel = Models[1]
+                ModelId = 2
             },
             new Flight
             {
@@ -118,7 +113,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,3,9,0,0),
                 ArrivalDateTime = new DateTime(2025,10,3,12,0,0),
                 FlightDuration = TimeSpan.FromHours(3),
-                AircraftModel = Models[2]
+                ModelId = 3
             },
             new Flight
             {
@@ -129,7 +124,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,4,14,0,0),
                 ArrivalDateTime = new DateTime(2025,10,4,20,0,0),
                 FlightDuration = TimeSpan.FromHours(6),
-                AircraftModel = Models[3]
+                ModelId = 4
             },
             new Flight
             {
@@ -140,7 +135,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,5,22,0,0),
                 ArrivalDateTime = new DateTime(2025,10,6,6,0,0),
                 FlightDuration = TimeSpan.FromHours(8),
-                AircraftModel = Models[4]
+                ModelId = 5
             },
             new Flight
             {
@@ -151,7 +146,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,6,6,0,0),
                 ArrivalDateTime = new DateTime(2025,10,6,15,0,0),
                 FlightDuration = TimeSpan.FromHours(9),
-                AircraftModel = Models[5]
+                ModelId = 6
             },
             new Flight
             {
@@ -162,7 +157,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,7,11,0,0),
                 ArrivalDateTime = new DateTime(2025,10,7,13,0,0),
                 FlightDuration = TimeSpan.FromHours(2),
-                AircraftModel = Models[6]
+                ModelId = 7
             },
             new Flight
             {
@@ -173,7 +168,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,8,16,0,0),
                 ArrivalDateTime = new DateTime(2025,10,8,18,0,0),
                 FlightDuration = TimeSpan.FromHours(2),
-                AircraftModel = Models[7]
+                ModelId = 8
             },
             new Flight
             {
@@ -184,7 +179,7 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,9,8,0,0),
                 ArrivalDateTime = new DateTime(2025,10,9,11,0,0),
                 FlightDuration = TimeSpan.FromHours(3),
-                AircraftModel = Models[8]
+                ModelId = 9
             },
             new Flight
             {
@@ -195,14 +190,9 @@ public class DataSeeder
                 DepartureDateTime = new DateTime(2025,10,10,7,0,0),
                 ArrivalDateTime = new DateTime(2025,10,10,13,0,0),
                 FlightDuration = TimeSpan.FromHours(6),
-                AircraftModel = Models[9]
+                ModelId = 10
             }
         ]);
-
-        foreach (var flight in Flights)
-        {
-            flight.AircraftModel.Flights.Add(flight);
-        }
 
         Passengers.AddRange(
         [
@@ -281,19 +271,14 @@ public class DataSeeder
     /// <param name="baggageWeight">Weight of checked baggage, if any.</param>
     private void AddTicket(int flightIndex, int passengerIndex, string seat, bool handLuggage, double? baggageWeight)
     {
-        var flight = Flights[flightIndex];
-        var passenger = Passengers[passengerIndex];
-        var ticket = new Ticket
+        Tickets.Add(new Ticket
         {
             Id = _ticketId++,
-            Flight = flight,
-            Passenger = passenger,
+            FlightId = Flights[flightIndex].Id,
+            PassengerId = Passengers[passengerIndex].Id,
             SeatNumber = seat,
             HasHandLuggage = handLuggage,
             TotalBaggageWeightKg = baggageWeight
-        };
-        Tickets.Add(ticket);
-        flight.Tickets!.Add(ticket);
-        passenger.Tickets!.Add(ticket);
+        });
     }
 }

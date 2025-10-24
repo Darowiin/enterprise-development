@@ -41,13 +41,15 @@ public class Flight
     /// </summary>
     public TimeSpan? FlightDuration { get; set; }
 
+    public required int ModelId { get; set; }
+
     /// <summary>
     /// The <see cref="Model.AircraftModel"/> operating this flight.
     /// </summary>
-    public required AircraftModel AircraftModel { get; set; }
+    public virtual AircraftModel? Model { get; set; }
 
     /// <summary>
     /// Collection of <see cref="Ticket"/>s issued for this flight.
     /// </summary>
-    public List<Ticket>? Tickets { get; set; } = [];
+    public virtual List<Ticket>? Tickets { get; set; } = [];
 }

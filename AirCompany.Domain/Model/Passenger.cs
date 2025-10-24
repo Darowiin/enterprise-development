@@ -28,5 +28,5 @@ public class Passenger
     /// <summary>
     /// Collection of <see cref="Ticket"/>s owned by this passenger.
     /// </summary>
-    public List<Ticket>? Tickets { get; set; } = [];
+    public virtual List<Ticket>? Tickets { get; set; } = [];
 }

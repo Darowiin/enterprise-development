@@ -23,8 +23,10 @@ public class MappingRegister : IRegister
 
         config.NewConfig<TicketCreateUpdateDto, Ticket>()
             .Ignore(dest => dest.Id)
-            .Ignore(dest => dest.Flight)
-            .Ignore(dest => dest.Passenger);
+            .Map(dest => dest.FlightId, src => src.FlightId)
+            .Map(dest => dest.PassengerId, src => src.PassengerId)
+            .Ignore(dest => dest.Flight!)
+            .Ignore(dest => dest.Passenger!);
 
         config.NewConfig<Passenger, PassengerDto>();
 
@@ -36,7 +38,8 @@ public class MappingRegister : IRegister
 
         config.NewConfig<FlightCreateUpdateDto, Flight>()
             .Ignore(dest => dest.Id)
-            .Ignore(dest => dest.AircraftModel)
+            .Map(dest => dest.ModelId, src => src.AircraftModelId)
+            .Ignore(dest => dest.Model!)
             .Ignore(dest => dest.Tickets!);
 
         config.NewConfig<AircraftModel, AircraftModelDto>();

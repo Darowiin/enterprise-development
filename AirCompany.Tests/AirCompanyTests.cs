@@ -19,21 +19,22 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
 
         // Act
         var topFlights = flights
-            .OrderByDescending(f => f.Tickets!.Count)
-            .Take(5)
-            .ToList();
+           .OrderByDescending(f => f.Tickets?.Count ?? 0)
+           .Take(5)
+           .ToList();
 
         // Assert
         Assert.Equal(5, topFlights.Count);
         for (var i = 0; i < topFlights.Count - 1; i++)
         {
             Assert.True(
-                topFlights[i].Tickets!.Count >= topFlights[i + 1].Tickets!.Count,
+                (topFlights[i].Tickets?.Count ?? 0) >= (topFlights[i + 1].Tickets?.Count ?? 0),
                 $"Flight {topFlights[i].Code} should have >= passengers than {topFlights[i + 1].Code}"
             );
         }
-        var maxPassengerCount = flights.Max(f => f.Tickets!.Count);
-        Assert.Equal(maxPassengerCount, topFlights.First().Tickets!.Count);
+
+        var maxPassengerCount = flights.Max(f => f.Tickets?.Count ?? 0);
+        Assert.Equal(maxPassengerCount, topFlights.First().Tickets?.Count ?? 0);
     }
 
     /// <summary>
@@ -65,13 +66,20 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
     public async Task GetPassengersWithZeroBaggageByFlight_ShouldReturnOrderedByName()
     {
         // Arrange
-        var flights = await fixture.FlightRepo.GetAll();
-        var selectedFlight = flights.First(f => f.Code == "SU1001");
+        var tickets = await fixture.TicketRepo.GetAll();
+        var passengers = await fixture.PassengerRepo.GetAll();
+        var selectedFlightTickets = tickets
+            .Where(t => t.FlightId == 1)
+            .ToList();
 
         // Act
-        var passengersWithNoBaggage = selectedFlight.Tickets!
-            .Where(t => t.TotalBaggageWeightKg is null or 0)
-            .Select(t => t.Passenger)
+        var passengerIdsWithNoBaggage = selectedFlightTickets
+        .Where(t => t.TotalBaggageWeightKg is null or 0)
+        .Select(t => t.PassengerId)
+        .ToList();
+
+        var passengersWithZeroBaggage = passengers
+            .Where(p => passengerIdsWithNoBaggage.Contains(p.Id))
             .OrderBy(p => p.FullName, StringComparer.Ordinal)
             .ToList();
 
@@ -82,7 +90,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
         };
 
         // Assert
-        Assert.Equal(expectedOrder, passengersWithNoBaggage.Select(p => p.FullName).ToArray());
+        Assert.Equal(expectedOrder, passengersWithZeroBaggage.Select(p => p.FullName).ToArray());
     }
 
     /// <summary>
@@ -101,7 +109,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
 
         // Act
         var flightsInPeriod = flights
-            .Where(f => f.AircraftModel == selectedModel &&
+            .Where(f => f.Model == selectedModel &&
                         f.DepartureDateTime.HasValue &&
                         f.DepartureDateTime.Value >= startDate &&
                         f.DepartureDateTime.Value <= endDate)
@@ -110,7 +118,7 @@ public class AirCompanyTests(AirCompanyFixture fixture) : IClassFixture<AirCompa
         // Assert
         Assert.All(flightsInPeriod, f =>
         {
-            Assert.Equal(selectedModel, f.AircraftModel);
+            Assert.Equal(selectedModel, f.Model);
             Assert.InRange(f.DepartureDateTime!.Value, startDate, endDate);
         });
     }

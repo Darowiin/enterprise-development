@@ -11,15 +11,19 @@ public class Ticket
     /// </summary>
     public required int Id { get; set; }
 
+    public required int FlightId { get; set; }
+
     /// <summary>
     /// The <see cref="Model.Flight"/> associated with this ticket.
     /// </summary>
-    public required Flight Flight { get; set; }
+    public virtual Flight? Flight { get; set; }
+
+    public required int PassengerId { get; set; }
 
     /// <summary>
     /// The <see cref="Model.Passenger"/> who owns this ticket.
     /// </summary>
-    public required Passenger Passenger { get; set; }
+    public virtual Passenger? Passenger { get; set; }
 
     /// <summary>
     /// Seat number assigned to this ticket (e.g., "12A").

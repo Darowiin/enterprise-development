@@ -8,11 +8,16 @@ using AirCompany.Application.Service;
 using AirCompany.Domain;
 using AirCompany.Domain.Data;
 using AirCompany.Domain.Model;
-using AirCompany.Infrastructure.InMemory.Repository;
+using AirCompany.Infrastructure.Database;
+using AirCompany.Infrastructure.Database.Repository;
+using AirCompany.ServiceDefaults;
 using Mapster;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 var config = TypeAdapterConfig.GlobalSettings;
 config.Scan(typeof(MappingRegister).Assembly);
@@ -22,11 +27,11 @@ builder.Services.AddScoped<IMapper, ServiceMapper>();
 
 builder.Services.AddSingleton<DataSeeder>();
 
-builder.Services.AddSingleton<IRepository<Ticket, int>, TicketInMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Flight, int>, FlightInMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Passenger, int>, PassengerInMemoryRepository>();
-builder.Services.AddSingleton<IRepository<AircraftModel, int>, AircraftModelInMemoryRepository>();
-builder.Services.AddSingleton<IRepository<AircraftFamily, int>, AircraftFamilyInMemoryRepository>();
+builder.Services.AddScoped<IRepository<Ticket, int>, TicketDatabaseRepository>();
+builder.Services.AddScoped<IRepository<Flight, int>, FlightDatabaseRepository>();
+builder.Services.AddScoped<IRepository<Passenger, int>, PassengerDatabaseRepository>();
+builder.Services.AddScoped<IRepository<AircraftModel, int>, AircraftModelDatabaseRepository>();
+builder.Services.AddScoped<IRepository<AircraftFamily, int>, AircraftFamilyDatabaseRepository>();
 
 builder.Services.AddScoped<IFlightCrudService, FlightService>();
 builder.Services.AddScoped<ITicketCrudService, TicketService>();
@@ -43,7 +48,21 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
+builder.AddNpgsqlDbContext<AirCompanyDbContext>("Database", configureDbContextOptions: builder => builder.UseLazyLoadingProxies());
+
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AirCompanyDbContext>();
+
+    await context.Database.MigrateAsync();
+
+    var seeder = new DbSeeder(context);
+    await seeder.Seed();
+}
 
 if (app.Environment.IsDevelopment())
 {

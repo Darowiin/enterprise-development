@@ -23,5 +23,5 @@ public class AircraftFamily
     /// <summary>
     /// Collection of <see cref="AircraftModel"/>s belonging to this aircraft family.
     /// </summary>
-    public List<AircraftModel>? Models { get; set; } = [];
+    public virtual List<AircraftModel>? Models { get; set; } = [];
 }
