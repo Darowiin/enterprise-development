@@ -3,6 +3,7 @@ using System;
 using AirCompany.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AirCompany.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(AirCompanyDbContext))]
-    partial class AirCompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251027122110_AddData")]
+    partial class AddData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

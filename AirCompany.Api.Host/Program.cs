@@ -59,9 +59,6 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<AirCompanyDbContext>();
 
     await context.Database.MigrateAsync();
-
-    var seeder = new DbSeeder(context);
-    await seeder.Seed();
 }
 
 if (app.Environment.IsDevelopment())

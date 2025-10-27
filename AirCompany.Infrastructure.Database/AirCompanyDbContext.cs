@@ -1,4 +1,5 @@
-﻿using AirCompany.Domain.Model;
+﻿using AirCompany.Domain.Data;
+using AirCompany.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -8,7 +9,7 @@ namespace AirCompany.Infrastructure.Database;
 /// EF Core database context for domain.
 /// Configures entities, relationships, and value converters.
 /// </summary>
-public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options) : DbContext(options)
+public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options, DataSeeder seeder) : DbContext(options)
 {
     /// <summary>
     /// Aircraft families in the database.
@@ -77,6 +78,8 @@ public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options) 
                     .WithOne(m => m.Family)
                     .HasForeignKey(m => m.FamilyId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(seeder.Families);
         });
 
         modelBuilder.Entity<AircraftModel>(builder =>
@@ -97,6 +100,8 @@ public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options) 
                     .WithOne(f => f.Model)
                     .HasForeignKey(f => f.ModelId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(seeder.Models);
         });
 
         modelBuilder.Entity<Passenger>(builder =>
@@ -114,6 +119,8 @@ public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options) 
                .WithOne(t => t.Passenger)
                .HasForeignKey(t => t.PassengerId)
                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(seeder.Passengers);
         });
 
         modelBuilder.Entity<Flight>(builder =>
@@ -136,6 +143,8 @@ public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options) 
                .WithOne(t => t.Flight)
                .HasForeignKey(t => t.FlightId)
                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(seeder.Flights);
         });
 
         modelBuilder.Entity<Ticket>(builder =>
@@ -147,6 +156,8 @@ public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options) 
                 .HasMaxLength(25);
 
             builder.HasIndex(t => t.SeatNumber).IsUnique();
+
+            builder.HasData(seeder.Tickets);
         });
     }
 }
