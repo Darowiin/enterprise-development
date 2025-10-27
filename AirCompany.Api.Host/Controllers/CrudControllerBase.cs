@@ -33,7 +33,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         => await ExecuteWithLogging(nameof(Create), async () =>
         {
             var result = await appService.Create(newDto);
-            return CreatedAtAction(nameof(Create), result)
+            return CreatedAtAction(nameof(Create), result);
         });
 
     /// <summary>
