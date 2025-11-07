@@ -81,7 +81,7 @@ public class TicketService(IRepository<Ticket, int> repository, IMapper mapper) 
         var entity = await repository.Get(ticketId)
                     ?? throw new KeyNotFoundException($"Entity with ID {ticketId} not found");
 
-        return mapper.Map<PassengerDto>(entity.Passenger);
+        return mapper.Map<PassengerDto>(entity.Passenger!);
     }
 
     /// <summary>
@@ -95,6 +95,20 @@ public class TicketService(IRepository<Ticket, int> repository, IMapper mapper) 
         var entity = await repository.Get(ticketId)
                     ?? throw new KeyNotFoundException($"Entity with ID {ticketId} not found");
 
-        return mapper.Map<FlightDto>(entity.Flight);
+        return mapper.Map<FlightDto>(entity.Flight!);
+    }
+
+    /// <summary>
+    /// Receives and saves a batch of ticket contracts to the database.
+    /// </summary>
+    /// <param name="contracts">
+    /// A collection of <see cref="TicketCreateUpdateDto"/> objects representing the received ticket contracts.
+    /// </param>
+    public async Task ReceiveContractList(IList<TicketCreateUpdateDto> contracts)
+    {
+        var entities = mapper.Map<List<Ticket>>(contracts);
+
+        foreach (var entity in entities)
+            await repository.Create(entity);
     }
 }

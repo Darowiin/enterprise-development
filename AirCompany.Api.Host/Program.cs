@@ -10,6 +10,7 @@ using AirCompany.Domain.Data;
 using AirCompany.Domain.Model;
 using AirCompany.Infrastructure.Database;
 using AirCompany.Infrastructure.Database.Repository;
+using AirCompany.Infrastructure.Nats;
 using AirCompany.ServiceDefaults;
 using Mapster;
 using MapsterMapper;
@@ -57,6 +58,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.AddNpgsqlDbContext<AirCompanyDbContext>("Database", configureDbContextOptions: builder => builder.UseLazyLoadingProxies());
+
+builder.Services.AddHostedService<AirCompanyNatsConsumer>();
+builder.AddNatsClient("aircompany-nats");
 
 var app = builder.Build();
 

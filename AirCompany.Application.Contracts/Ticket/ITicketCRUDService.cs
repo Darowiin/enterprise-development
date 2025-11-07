@@ -21,4 +21,12 @@ public interface ITicketCrudService : IApplicationCrudService<TicketDto, TicketC
     /// <param name="ticketId">The unique identifier of the ticket.</param>
     /// <returns>The flight associated with the ticket.</returns>
     public Task<FlightDto> GetFlight(int ticketId);
+
+    /// <summary>
+    /// Receives and saves a batch of ticket contracts to the database.
+    /// </summary>
+    /// <param name="contracts">
+    /// A collection of <see cref="TicketCreateUpdateDto"/> objects representing the received ticket contracts.
+    /// </param>
+    public Task ReceiveContractList(IList<TicketCreateUpdateDto> contracts);
 }
