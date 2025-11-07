@@ -9,18 +9,19 @@ builder.AddNatsClient("aircompany-nats");
 builder.Services.AddScoped<IProducerService, AirCompanyNatsProducer>();
 builder.Services.AddHostedService<GeneratorService>();
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
 {
     var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-        .Where(a => a.GetName().Name!.StartsWith("AirCompany"))
-        .Distinct();
+    .Where(a => a.GetName().Name!.StartsWith("AirCompany"))
+    .Distinct();
 
     foreach (var assembly in assemblies)
     {
         var xmlFile = $"{assembly.GetName().Name}.xml";
         var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
         if (File.Exists(xmlPath))
-            c.IncludeXmlComments(xmlPath);
+            options.IncludeXmlComments(xmlPath);
     }
 });
 
