@@ -1,13 +1,10 @@
 ﻿using AirCompany.Application.Contracts;
 using AirCompany.Application.Contracts.Ticket;
-using AirCompany.Infrastructure.Nats.Deserializer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NATS.Client.Core;
-using NATS.Client.JetStream.Models;
-using NATS.Net;
 using System.Text.Json;
 
 namespace AirCompany.Infrastructure.Nats;
