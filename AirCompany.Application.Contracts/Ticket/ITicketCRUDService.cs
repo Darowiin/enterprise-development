@@ -28,5 +28,5 @@ public interface ITicketCrudService : IApplicationCrudService<TicketDto, TicketC
     /// <param name="contracts">
     /// A collection of <see cref="TicketCreateUpdateDto"/> objects representing the received ticket contracts.
     /// </param>
-    public Task ReceiveContractList(IList<TicketCreateUpdateDto> contracts);
+    public Task<int> ReceiveContractList(IList<TicketCreateUpdateDto> contracts);
 }

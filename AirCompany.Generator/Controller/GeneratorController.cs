@@ -32,12 +32,35 @@ public class GeneratorController(ILogger<GeneratorController> logger, IProducerS
             while (counter < payloadLimit)
             {
                 var batch = TicketGenerator.GenerateContract(batchSize);
-                await producerService.SendAsync(batch);
-                logger.LogInformation("Batch of {batchSize} items has been sent", batchSize);
-                await Task.Delay(waitTime * 1000);
+                var remaining = batch!.Count;
+                var batchOffset = 0;
+
+                while (remaining > 0)
+                {
+                    var currentBatch = batch.Skip(batchOffset).Take(remaining).ToList();
+
+                    var result = await producerService.SendAsync(currentBatch);
+
+                    if (!result.Success)
+                    {
+                        logger.LogWarning("Batch failed, regenerating only remaining {remaining} items...", remaining);
+                        var newTickets = TicketGenerator.GenerateContract(remaining);
+                        batch = [.. batch.Take(batchOffset), .. newTickets!];
+                        continue;
+                    }
+
+                    var inserted = result.Inserted;
+                    remaining -= inserted;
+                    batchOffset += inserted;
+
+                    if (remaining > 0)
+                        logger.LogWarning("{remaining} items not inserted, retrying them...", remaining);
+                }
+
                 counter += batchSize;
-                list.AddRange(batch);
+                await Task.Delay(waitTime * 1000);
             }
+            logger.LogInformation("Finished sending {total} messages with {time}s interval with {batch} messages in batch", payloadLimit, waitTime, batchSize);
 
             logger.LogInformation("{method} method of {controller} executed successfully", nameof(Get), GetType().Name);
             return Ok(list);

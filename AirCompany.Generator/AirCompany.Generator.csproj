@@ -10,10 +10,12 @@
   <ItemGroup>
     <PackageReference Include="Bogus" Version="35.6.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AirCompany.Application.Contracts\AirCompany.Application.Contracts.csproj" />
+    <ProjectReference Include="..\AirCompany.Infrastructure.Database\AirCompany.Infrastructure.Database.csproj" />
   </ItemGroup>
 
 </Project>

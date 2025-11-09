@@ -1,5 +1,4 @@
-﻿using AirCompany.Generator.Service;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -34,12 +33,36 @@ IConfiguration configuration,
         var counter = 0;
         using var scope = scopeFactory.CreateScope();
         var producer = scope.ServiceProvider.GetRequiredService<IProducerService>();
-        while (counter < payloadLimit)
+        while (counter < payloadLimit && !stoppingToken.IsCancellationRequested)
         {
+            var batch = TicketGenerator.GenerateContract(batchSize);
+            var remaining = batch!.Count;
+            var batchOffset = 0;
 
-            await producer.SendAsync(TicketGenerator.GenerateContract(batchSize));
-            await Task.Delay(waitTime * 1000, stoppingToken);
+            while (remaining > 0 && !stoppingToken.IsCancellationRequested)
+            {
+                var currentBatch = batch.Skip(batchOffset).Take(remaining).ToList();
+
+                var result = await producer.SendAsync(currentBatch);
+
+                if (!result.Success)
+                {
+                    logger.LogWarning("Batch failed, regenerating only remaining {remaining} items...", remaining);
+                    var newTickets = TicketGenerator.GenerateContract(remaining);
+                    batch = [.. batch.Take(batchOffset), .. newTickets!];
+                    continue;
+                }
+
+                var inserted = result.Inserted;
+                remaining -= inserted;
+                batchOffset += inserted;
+
+                if (remaining > 0)
+                    logger.LogWarning("{remaining} items not inserted, retrying them...", remaining);
+            }
+
             counter += batchSize;
+            await Task.Delay(waitTime * 1000, stoppingToken);
         }
         logger.LogInformation("Finished sending {total} messages with {time}s interval with {batch} messages in batch", _payloadLimit, _waitTime, _batchSize);
     }

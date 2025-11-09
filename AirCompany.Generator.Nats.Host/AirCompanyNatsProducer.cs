@@ -1,4 +1,5 @@
-﻿using AirCompany.Application.Contracts.Ticket;
+﻿using AirCompany.Application.Contracts;
+using AirCompany.Application.Contracts.Ticket;
 using AirCompany.Generator.Service;
 using NATS.Client.Core;
 using NATS.Client.JetStream.Models;
@@ -21,23 +22,56 @@ public class AirCompanyNatsProducer(
 {
     private readonly string _streamName = configuration.GetSection("Nats")["StreamName"] ?? throw new KeyNotFoundException("StreamName section of Nats is missing");
     private readonly string _subjectName = configuration.GetSection("Nats")["SubjectName"] ?? throw new KeyNotFoundException("SubjectName section of Nats is missing");
-    
-    /// <inheritdoc/>
-    public async Task SendAsync(IList<TicketCreateUpdateDto> batch)
-    {
-        try
-        {
-            await connection.ConnectAsync();
-            var context = connection.CreateJetStreamContext();
-            var stream = context.CreateOrUpdateStreamAsync(new StreamConfig(_streamName, [_subjectName]));
-            logger.LogInformation("Establishing a stream {stream} with subject {subject}", _streamName, _subjectName);
 
-            await context.PublishAsync(_subjectName, JsonSerializer.SerializeToUtf8Bytes(batch));
-            logger.LogInformation("Sent a batch of {count} contracts to {subject} of {stream}", batch.Count, _subjectName, _streamName);
-        }
-        catch (Exception ex)
+    /// <inheritdoc/>
+    public async Task<BatchAckResponse> SendAsync(IList<TicketCreateUpdateDto> batch)
+    {
+        var batchId = Guid.NewGuid();
+        var payload = new
         {
-            logger.LogError(ex, "Exception occured during sending a batch of {count} contracts to {stream}/{subject}", batch.Count, _streamName, _subjectName);
+            BatchId = batchId,
+            Data = batch
+        };
+        await connection.ConnectAsync();
+        var context = connection.CreateJetStreamContext();
+        await context.CreateOrUpdateStreamAsync(new StreamConfig(_streamName, [_subjectName]));
+
+        var replyInbox = $"_INBOX.{Guid.NewGuid():N}";
+
+        var tcs = new TaskCompletionSource<BatchAckResponse>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        _ = Task.Run(async () =>
+        {
+            await foreach (var msg in connection.SubscribeAsync<byte[]>(replyInbox))
+            {
+                try
+                {
+                    var ack = JsonSerializer.Deserialize<BatchAckResponse>(msg.Data);
+                    if (ack is not null && ack.BatchId == batchId)
+                    {
+                        tcs.TrySetResult(new BatchAckResponse { BatchId = batchId, Inserted = ack.Inserted });
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "Failed to deserialize ack on inbox {inbox}", replyInbox);
+                }
+            }
+        });
+
+        await connection.PublishAsync(_subjectName, JsonSerializer.SerializeToUtf8Bytes(payload), replyTo: replyInbox);
+        logger.LogInformation("Sent batch {batchId} ({count} items) to {subject}", batchId, batch.Count, _subjectName);
+
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+        var completed = await Task.WhenAny(tcs.Task, Task.Delay(Timeout.Infinite, cts.Token));
+
+        if (completed != tcs.Task)
+        {
+            logger.LogWarning("No ACK received for batch {batchId} within timeout", batchId);
+            return new BatchAckResponse { BatchId = batchId, Inserted = 0 };
         }
+
+        return await tcs.Task;
     }
 }

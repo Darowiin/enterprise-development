@@ -1,4 +1,5 @@
-﻿using AirCompany.Application.Contracts.Ticket;
+﻿using AirCompany.Application.Contracts;
+using AirCompany.Application.Contracts.Ticket;
 
 namespace AirCompany.Generator.Service;
 
@@ -11,5 +12,5 @@ public interface IProducerService
     /// Sends a collection of contracts.
     /// </summary>
     /// <param name="batch">Collection of contracts.</param>
-    public Task SendAsync(IList<TicketCreateUpdateDto> batch);
+    public Task<BatchAckResponse> SendAsync(IList<TicketCreateUpdateDto> batch);
 }

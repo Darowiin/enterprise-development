@@ -8,6 +8,7 @@ using AirCompany.Application.Service;
 using AirCompany.Domain;
 using AirCompany.Domain.Data;
 using AirCompany.Domain.Model;
+using AirCompany.Generator;
 using AirCompany.Infrastructure.Database;
 using AirCompany.Infrastructure.Database.Repository;
 using AirCompany.Infrastructure.Nats;
@@ -71,6 +72,8 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<AirCompanyDbContext>();
 
     await context.Database.MigrateAsync();
+
+    await TicketGenerator.InitializeAsync(context);
 }
 
 if (app.Environment.IsDevelopment())
