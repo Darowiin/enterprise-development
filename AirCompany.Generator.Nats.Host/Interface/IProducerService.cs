@@ -1,7 +1,7 @@
 ﻿using AirCompany.Application.Contracts;
 using AirCompany.Application.Contracts.Ticket;
 
-namespace AirCompany.Generator.Service;
+namespace AirCompany.Generator.Nats.Host.Interface;
 
 /// <summary>
 /// Interface of a service responsible for sending messages over the bus.

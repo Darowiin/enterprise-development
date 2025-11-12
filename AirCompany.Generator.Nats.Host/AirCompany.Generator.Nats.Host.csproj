@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.NATS.Net" Version="9.5.2" />
+    <PackageReference Include="Bogus" Version="35.6.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AirCompany.Generator\AirCompany.Generator.csproj" />
+    <ProjectReference Include="..\AirCompany.Application.Contracts\AirCompany.Application.Contracts.csproj" />
     <ProjectReference Include="..\AirCompany.ServiceDefaults\AirCompany.ServiceDefaults.csproj" />
   </ItemGroup>
 

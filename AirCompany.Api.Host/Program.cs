@@ -8,11 +8,11 @@ using AirCompany.Application.Service;
 using AirCompany.Domain;
 using AirCompany.Domain.Data;
 using AirCompany.Domain.Model;
-using AirCompany.Generator;
 using AirCompany.Infrastructure.Database;
 using AirCompany.Infrastructure.Database.Repository;
 using AirCompany.Infrastructure.Nats;
 using AirCompany.ServiceDefaults;
+using AirCompany.Validator.Nats;
 using Mapster;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -61,6 +61,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.AddNpgsqlDbContext<AirCompanyDbContext>("Database", configureDbContextOptions: builder => builder.UseLazyLoadingProxies());
 
 builder.Services.AddHostedService<AirCompanyNatsConsumer>();
+builder.Services.AddHostedService<TicketValidatorService>();
 builder.AddNatsClient("aircompany-nats");
 
 var app = builder.Build();
@@ -72,8 +73,6 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<AirCompanyDbContext>();
 
     await context.Database.MigrateAsync();
-
-    await TicketGenerator.InitializeAsync(context);
 }
 
 if (app.Environment.IsDevelopment())

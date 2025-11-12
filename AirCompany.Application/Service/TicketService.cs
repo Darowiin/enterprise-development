@@ -4,7 +4,6 @@ using AirCompany.Application.Contracts.Ticket;
 using AirCompany.Domain;
 using AirCompany.Domain.Model;
 using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
 
 namespace AirCompany.Application.Service;
 
@@ -108,21 +107,10 @@ public class TicketService(IRepository<Ticket, int> repository, IMapper mapper) 
     public async Task<int> ReceiveContractList(IList<TicketCreateUpdateDto> contracts)
     {
         var entities = mapper.Map<List<Ticket>>(contracts);
-        var seats = entities.Select(e => e.SeatNumber).ToList();
 
-        var tickets = await repository.GetAll();
-
-        var existing = (tickets
-            .Where(t => seats.Contains(t.SeatNumber))
-            .Select(t => t.SeatNumber)
-            .ToList())
-            .ToHashSet();
-
-        var toInsert = entities.Where(e => !existing.Contains(e.SeatNumber)).ToList();
-
-        foreach (var entity in toInsert) 
+        foreach (var entity in entities) 
             await repository.Create(entity);
 
-        return toInsert.Count;
+        return entities.Count;
     }
 }

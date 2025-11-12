@@ -155,7 +155,7 @@ public class AirCompanyDbContext(DbContextOptions<AirCompanyDbContext> options, 
                 .IsRequired()
                 .HasMaxLength(25);
 
-            builder.HasIndex(t => t.SeatNumber).IsUnique();
+            builder.HasIndex(t => new { t.FlightId, t.SeatNumber }).IsUnique();
 
             builder.HasData(seeder.Tickets);
         });

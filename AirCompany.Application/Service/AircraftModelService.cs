@@ -46,7 +46,7 @@ public class AirCraftModelService(IRepository<AircraftModel, int> repository, IM
         var entity = await repository.Get(modelId)
                     ?? throw new KeyNotFoundException($"Entity with ID {modelId} not found");
 
-        return mapper.Map<AircraftFamilyDto>(entity.Family);
+        return mapper.Map<AircraftFamilyDto>(entity.Family!);
     }
 
     /// <summary>

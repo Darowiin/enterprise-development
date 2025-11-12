@@ -41,7 +41,7 @@ DTO-классы двух видов для каждой сущности:
 
 Сервисы реализуют интерфейсы из Contracts и используют Mapster для маппинга между DTO и Entity сущностями
 
-Добавлен TicketService.ReceiveContractList — метод для приёма батчей; возвращает количество реально вставленных записей (int)
+Добавлен TicketService.ReceiveContractList — метод для приёма батчей; возвращает количество вставленных записей (int)
 
 ### Api.Host
 
@@ -77,22 +77,18 @@ AirCompanyFixture для инициализации и заполнения ко
 
 Unit-тесты проверяют необходимую бизнес-логику доменных сущностей и репозиториев
 
-### Generator
+### Generator.Nats.Host
 
-Сервис-генератор тестовых TicketCreateUpdateDto:
+Проект для генерации билетов и отправки через NATS-Producer-а в Consumer:
 
-TicketGenerator - асинхронный, поддерживает InitializeAsync(dbContext) (загружает уже занятые места) и проверку уникальности мест при генерации
+TicketGenerator - генерирует список TickerCreateUpdateDto через Bogus
 
-GeneratorController и GeneratorService - генерируют заданное количество контрактов партиями по определенному количество с задержкой между партиями,
-для сервиса эти параметры задаются через appsettings.json из AppHost, для контроллера задаются в OpenApi
+GeneratorController - вызывает генерацию через TicketGenerator, генерирует заданное количество контрактов партиями по определенному количество с задержкой между партиями,
+и проверяет результат Producer-а для возможности дополнительной генерации до нужного числа
 
 IProducerService - интерфейс для реализации Producer у Nats
 
-### Generator.Nats.Host
-
-NATS-producer проект:
-
-AirCompanyNatsProducer - публикует BatchMessage с BatchId и ждёт reply/ACK от consumer (request/reply)
+AirCompanyNatsProducer - класс, реализующий IProducerService, публикует BatchMessage с BatchId и ждёт reply/ACK от consumer (request/reply)
 
 SendAsync возвращает информацию о вставленных элементах (через BatchAckResponse ) - продюсер на основе этого решает, догенерировать недостающие элементы или повторить отправку
 
@@ -102,6 +98,13 @@ SendAsync возвращает информацию о вставленных э
 
 NATS-consumer проект:
 
-AirCompanyNatsConsumer - подписывается на subject, обрабатывает BatchMessage, вызывает TicketService.ReceiveContractList(), затем публикует BatchAckResponse в message.ReplyTo
+AirCompanyNatsConsumer - подписывается на ValidatedSubject, обрабатывает BatchMessage, вызывает TicketService.ReceiveContractList(), затем публикует BatchAckResponse в message.ReplyTo
 
 Обрабатывает Ack / Nak и логирует результат
+
+### Validator.Nats
+
+Проект для валидации билетов:
+
+TicketValidatorService - получает список TickerCreateUpdateDto из RawSubject(Producer),
+валидирует данные, сравнивая с данными из базы данных и отправляет в ValidatedSubject только подходящие билеты

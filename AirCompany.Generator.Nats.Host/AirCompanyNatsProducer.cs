@@ -1,6 +1,6 @@
 ﻿using AirCompany.Application.Contracts;
 using AirCompany.Application.Contracts.Ticket;
-using AirCompany.Generator.Service;
+using AirCompany.Generator.Nats.Host.Interface;
 using NATS.Client.Core;
 using NATS.Client.JetStream.Models;
 using NATS.Net;
@@ -21,7 +21,7 @@ public class AirCompanyNatsProducer(
 ) : IProducerService
 {
     private readonly string _streamName = configuration.GetSection("Nats")["StreamName"] ?? throw new KeyNotFoundException("StreamName section of Nats is missing");
-    private readonly string _subjectName = configuration.GetSection("Nats")["SubjectName"] ?? throw new KeyNotFoundException("SubjectName section of Nats is missing");
+    private readonly string _rawSubject = configuration.GetSection("Nats")["RawSubject"] ?? throw new KeyNotFoundException("RawSubject section of Nats is missing");
 
     /// <inheritdoc/>
     public async Task<BatchAckResponse> SendAsync(IList<TicketCreateUpdateDto> batch)
@@ -34,7 +34,7 @@ public class AirCompanyNatsProducer(
         };
         await connection.ConnectAsync();
         var context = connection.CreateJetStreamContext();
-        await context.CreateOrUpdateStreamAsync(new StreamConfig(_streamName, [_subjectName]));
+        await context.CreateOrUpdateStreamAsync(new StreamConfig(_streamName, [_rawSubject]));
 
         var replyInbox = $"_INBOX.{Guid.NewGuid():N}";
 
@@ -49,7 +49,7 @@ public class AirCompanyNatsProducer(
                     var ack = JsonSerializer.Deserialize<BatchAckResponse>(msg.Data);
                     if (ack is not null && ack.BatchId == batchId)
                     {
-                        tcs.TrySetResult(new BatchAckResponse { BatchId = batchId, Inserted = ack.Inserted });
+                        tcs.TrySetResult(new BatchAckResponse { BatchId = batchId, InsertedDtos = ack.InsertedDtos });
                         break;
                     }
                 }
@@ -60,8 +60,8 @@ public class AirCompanyNatsProducer(
             }
         });
 
-        await connection.PublishAsync(_subjectName, JsonSerializer.SerializeToUtf8Bytes(payload), replyTo: replyInbox);
-        logger.LogInformation("Sent batch {batchId} ({count} items) to {subject}", batchId, batch.Count, _subjectName);
+        await connection.PublishAsync(_rawSubject, JsonSerializer.SerializeToUtf8Bytes(payload), replyTo: replyInbox);
+        logger.LogInformation("Sent batch {batchId} ({count} items) to {subject}", batchId, batch.Count, _rawSubject);
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         var completed = await Task.WhenAny(tcs.Task, Task.Delay(Timeout.Infinite, cts.Token));
@@ -69,7 +69,7 @@ public class AirCompanyNatsProducer(
         if (completed != tcs.Task)
         {
             logger.LogWarning("No ACK received for batch {batchId} within timeout", batchId);
-            return new BatchAckResponse { BatchId = batchId, Inserted = 0 };
+            return new BatchAckResponse { BatchId = batchId };
         }
 
         return await tcs.Task;

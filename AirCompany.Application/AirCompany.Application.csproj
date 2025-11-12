@@ -15,7 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\AirCompany.Application.Contracts\AirCompany.Application.Contracts.csproj" />
     <ProjectReference Include="..\AirCompany.Domain\AirCompany.Domain.csproj" />
-    <ProjectReference Include="..\AirCompany.Infrastructure.InMemory\AirCompany.Infrastructure.InMemory.csproj" />
   </ItemGroup>
 
 </Project>

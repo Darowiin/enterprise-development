@@ -1,9 +1,8 @@
 ﻿using AirCompany.Application.Contracts.Ticket;
-using AirCompany.Generator.Service;
+using AirCompany.Generator.Nats.Host.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace AirCompany.Generator.Controller;
+namespace AirCompany.Generator.Nats.Host.Controller;
 
 /// <summary>
 /// Controller for generating ticket contracts and sending them via the message bus.
@@ -52,6 +51,9 @@ public class GeneratorController(ILogger<GeneratorController> logger, IProducerS
                     var inserted = result.Inserted;
                     remaining -= inserted;
                     batchOffset += inserted;
+
+                    if (result.InsertedDtos != null)
+                        list.AddRange(result.InsertedDtos);
 
                     if (remaining > 0)
                         logger.LogWarning("{remaining} items not inserted, retrying them...", remaining);

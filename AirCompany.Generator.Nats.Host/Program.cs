@@ -1,5 +1,5 @@
 using AirCompany.Generator.Nats.Host;
-using AirCompany.Generator.Service;
+using AirCompany.Generator.Nats.Host.Interface;
 using AirCompany.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 builder.AddNatsClient("aircompany-nats");
 builder.Services.AddScoped<IProducerService, AirCompanyNatsProducer>();
-builder.Services.AddHostedService<GeneratorService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

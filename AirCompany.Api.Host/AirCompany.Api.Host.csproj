@@ -19,13 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AirCompany.Application.Contracts\AirCompany.Application.Contracts.csproj" />
     <ProjectReference Include="..\AirCompany.Application\AirCompany.Application.csproj" />
-    <ProjectReference Include="..\AirCompany.Domain\AirCompany.Domain.csproj" />
-    <ProjectReference Include="..\AirCompany.Generator\AirCompany.Generator.csproj" />
     <ProjectReference Include="..\AirCompany.Infrastructure.Database\AirCompany.Infrastructure.Database.csproj" />
     <ProjectReference Include="..\AirCompany.Infrastructure.Nats\AirCompany.Infrastructure.Nats.csproj" />
     <ProjectReference Include="..\AirCompany.ServiceDefaults\AirCompany.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\AirCompany.Validator.Nats\AirCompany.Validator.Nats.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace AirCompany.Application.Contracts;
+﻿using AirCompany.Application.Contracts.Ticket;
+
+namespace AirCompany.Application.Contracts;
 
 /// <summary>
 /// Represents the acknowledgment response for a batch sent by the producer.
@@ -11,9 +13,14 @@ public class BatchAckResponse
     public Guid BatchId { get; set; }
 
     /// <summary>
+    /// Items successfully inserted from the batch.
+    /// </summary>
+    public List<TicketCreateUpdateDto>? InsertedDtos { get; set; }
+
+    /// <summary>
     /// The number of items successfully inserted from the batch.
     /// </summary>
-    public int Inserted { get; set; }
+    public int Inserted => InsertedDtos?.Count ?? 0;
 
     /// <summary>
     /// Indicates whether the batch was successfully processed (i.e., at least one item inserted).

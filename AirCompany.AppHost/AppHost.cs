@@ -1,6 +1,3 @@
-using Aspire.Hosting;
-using Microsoft.Extensions.Hosting;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 var databasePassword = builder.AddParameter("DatabasePassword");
@@ -32,7 +29,8 @@ builder.AddContainer("aircompany-nui", "ghcr.io/nats-nui/nui")
     .WithHttpEndpoint(port: 31311, targetPort: 31311);
 
 var natsStream = builder.AddParameter("NatsStream");
-var natsSubject = builder.AddParameter("NatsSubject");
+var rawSubject = builder.AddParameter("RawSubject");
+var validatedSubject = builder.AddParameter("ValidatedSubject");
 builder.AddProject<Projects.AirCompany_Generator_Nats_Host>("aircompany-generator-nats-host")
     .WithReference(nats)
     .WaitFor(nats)
@@ -40,9 +38,11 @@ builder.AddProject<Projects.AirCompany_Generator_Nats_Host>("aircompany-generato
     .WithEnvironment("Generator:PayloadLimit", payloadLimit)
     .WithEnvironment("Generator:WaitTime", waitTime)
     .WithEnvironment("Nats:StreamName", natsStream)
-    .WithEnvironment("Nats:SubjectName", natsSubject);
+    .WithEnvironment("Nats:RawSubject", rawSubject)
+    .WithEnvironment("Nats:ValidatedSubject", validatedSubject);
 
-apiHost.WithEnvironment("Nats:SubjectName", natsSubject)
+apiHost.WithEnvironment("Nats:RawSubject", rawSubject)
+    .WithEnvironment("Nats:ValidatedSubject", validatedSubject)
     .WithEnvironment("Nats:StreamName", natsStream)
     .WithReference(nats)
     .WaitFor(nats);
